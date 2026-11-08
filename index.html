@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SyncGo: ניהול הוצאות קבוצתיות וטיולים</title>
+<meta name="description" content="SyncGo: חלוקת הוצאות, מסלול, ציוד ואלבומים משותפים לכל טיול או אירוע.">
+<meta property="og:title" content="SyncGo"><meta property="og:description" content="Group expenses & trips, done right.">
+<link rel="icon" href="logo.png">
+<style>
+:root{--bg:#f8fafc;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e2e8f0;--brand:#0076ff;--soft:#e8f1ff}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0f19;--card:#0f172a;--text:#f8fafc;--sub:#94a3b8;--line:#1e293b;--soft:rgba(0,118,255,.15)}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+a{color:inherit}.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;text-decoration:none}.brand img{width:32px;height:32px}
+.lang{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer}
+.hero{background:linear-gradient(135deg,#0c1838,#0052cc 60%,#0076ff);color:#fff;border-radius:28px;padding:56px 28px;text-align:center;margin-top:8px}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 12px;line-height:1.2}.hero p{max-width:560px;margin:0 auto 24px;opacity:.9;font-size:18px}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.badge{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:12px 20px;font-weight:700}
+h2{font-size:26px;margin:56px 0 20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}.card .ic{width:44px;height:44px;border-radius:14px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--sub);font-size:15px}
+.steps{counter-reset:s}.steps .card{position:relative}.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:-12px;inset-inline-start:20px;background:var(--brand);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
+footer{margin:64px 0 32px;padding-top:24px;border-top:1px solid var(--line);color:var(--sub);font-size:14px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+footer nav{padding:0;gap:16px;display:flex;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="/"><img src="logo.png" alt="">SyncGo</a>
+    <button class="lang" id="lang" type="button">English</button>
+  </nav>
+
+  <section class="hero">
+    <h1 data-t="h1"></h1>
+    <p data-t="sub"></p>
+    <div class="badges"><span class="badge">▶ Google Play · <span data-t="soon"></span></span><span class="badge"> App Store · <span data-t="soon"></span></span></div>
+  </section>
+
+  <h2 data-t="featTitle"></h2>
+  <section class="grid">
+    <div class="card"><div class="ic">💸</div><h3 data-t="f1t"></h3><p data-t="f1d"></p></div>
+    <div class="card"><div class="ic">🤝</div><h3 data-t="f2t"></h3><p data-t="f2d"></p></div>
+    <div class="card"><div class="ic">💱</div><h3 data-t="f3t"></h3><p data-t="f3d"></p></div>
+    <div class="card"><div class="ic">🗺️</div><h3 data-t="f4t"></h3><p data-t="f4d"></p></div>
+    <div class="card"><div class="ic">⛺</div><h3 data-t="f5t"></h3><p data-t="f5d"></p></div>
+    <div class="card"><div class="ic">📸</div><h3 data-t="f6t"></h3><p data-t="f6d"></p></div>
+  </section>
+
+  <h2 data-t="howTitle"></h2>
+  <section class="grid steps">
+    <div class="card"><h3 data-t="s1t"></h3><p data-t="s1d"></p></div>
+    <div class="card"><h3 data-t="s2t"></h3><p data-t="s2d"></p></div>
+    <div class="card"><h3 data-t="s3t"></h3><p data-t="s3d"></p></div>
+  </section>
+
+  <footer>
+    <span>© <span id="y"></span> SyncGo</span>
+    <nav>
+      <a href="privacy.html" data-t="privacy"></a>
+      <a href="terms.html" data-t="terms"></a>
+      <a href="delete-account.html" data-t="del"></a>
+      <a href="mailto:support@syncgo.app">support@syncgo.app</a>
+    </nav>
+  </footer>
+</div>
+
+<script>
+const T={
+he:{h1:"כל ההוצאות של הקבוצה, במקום אחד",sub:"טיולים, חופשות ואירועים: מחלקים הוצאות, סוגרים חובות ומתכננים יחד, בלי אקסלים ובלי ריבים.",soon:"בקרוב",
+featTitle:"מה יש באפליקציה",
+f1t:"חלוקת הוצאות חכמה",f1d:"שווה, לנבחרים בלבד או ידנית, והחובות מחושבים אוטומטית.",
+f2t:"סגירת חובות",f2d:"רושמים תשלום ומאזנים, כולל מעבר מהיר ל-Bit.",
+f3t:"מטבעות ושערים",f3d:"הוצאות במטבע זר מומרות לפי שער עדכני, עם מחשבון מובנה.",
+f4t:"מסלול ולו\"ז",f4d:"פעילויות, נקודות עניין וניווט, וכל אחד מסמן אם הוא מגיע.",
+f5t:"ציוד וקניות",f5d:"מי מביא מה, ורשימת קניות לפי קטגוריות.",
+f6t:"אלבומים משותפים",f6d:"קישור לאלבום התמונות של הקבוצה, זמין לכולם.",
+howTitle:"איך זה עובד",s1t:"נרשמים",s1d:"עם Google או עם קוד במייל, ובוחרים שם וטלפון.",s2t:"יוצרים אירוע",s2d:"מוסיפים חברים מאנשי הקשר שכבר משתמשים באפליקציה.",s3t:"מחלקים ומסיימים",s3d:"הוצאות מתעדכנות אצל כולם בזמן אמת, ובסוף סוגרים חשבון.",
+privacy:"מדיניות פרטיות",terms:"תנאי שימוש",del:"מחיקת חשבון"},
+en:{h1:"Every group expense, in one place",sub:"Trips, vacations and events: split costs, settle up and plan together. No spreadsheets, no arguments.",soon:"Coming soon",
+featTitle:"What's inside",
+f1t:"Smart expense splitting",f1d:"Equal, selected people only, or manual, with debts calculated for you.",
+f2t:"Settle up",f2d:"Record payments and balance out, with a quick jump to Bit.",
+f3t:"Currencies & rates",f3d:"Foreign expenses are converted at a current rate, plus a built-in calculator.",
+f4t:"Route & schedule",f4d:"Activities, points of interest and navigation. Everyone marks if they're coming.",
+f5t:"Gear & shopping",f5d:"Who brings what, and a shopping list by category.",
+f6t:"Shared albums",f6d:"Link your group's photo album so everyone can find it.",
+howTitle:"How it works",s1t:"Sign up",s1d:"With Google or an email code, then pick a name and phone.",s2t:"Create an event",s2d:"Add friends from your contacts who already use the app.",s3t:"Split & settle",s3d:"Expenses update for everyone in real time, then settle up.",
+privacy:"Privacy policy",terms:"Terms of use",del:"Delete account"}};
+const el=document.documentElement;
+function set(l){el.lang=l;el.dir=l==="he"?"rtl":"ltr";document.querySelectorAll("[data-t]").forEach(n=>n.textContent=T[l][n.dataset.t]);
+  document.getElementById("lang").textContent=l==="he"?"English":"עברית";document.title=l==="he"?"SyncGo: ניהול הוצאות קבוצתיות וטיולים":"SyncGo: group expenses & trips";localStorage.setItem("lang",l)}
+document.getElementById("lang").onclick=()=>set(el.lang==="he"?"en":"he");
+document.getElementById("y").textContent=new Date().getFullYear();
+set(localStorage.getItem("lang")||(navigator.language.startsWith("he")?"he":"en"));
+</script>
+</body>
+</html>
