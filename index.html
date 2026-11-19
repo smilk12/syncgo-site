@@ -1,395 +1,531 @@
 <!doctype html>
-<html lang="he" dir="rtl" data-theme="blue">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SyncGo: ניהול הוצאות קבוצתיות וטיולים</title>
-<meta name="description" content="SyncGo: חלוקת הוצאות, מסלול, ציוד ואלבומים משותפים לכל טיול או אירוע.">
-<meta name="theme-color" content="#0b0f19">
+<title>SyncGo · כל הקבוצה, באותו מסלול</title>
+<meta name="description" content="SyncGo: תכנון טיולים ואירועים קבוצתיים וחלוקת הוצאות. מי חייב למי, מסלול, ציוד ואלבום משותף, מסונכרן בזמן אמת.">
+<meta name="theme-color" content="#0c1838">
+<meta property="og:title" content="SyncGo · כל הקבוצה, באותו מסלול">
+<meta property="og:description" content="תכנון טיולים ואירועים קבוצתיים וחלוקת הוצאות, מסונכרן בזמן אמת.">
+<meta property="og:image" content="https://syncgo.app/logo.png">
+<meta property="og:url" content="https://syncgo.app/">
 <link rel="icon" href="logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ===== Palette tokens: blue (default) and green share the same structure ===== */
-:root{--bg:#0b0f19;--sub:#94a3b8;--blue:#0066fe;--blue2:#0088ff;--go:#0076ff;--soft:#7fb8ff;--glow:rgba(0,118,255,.45);--tint:rgba(0,102,254,.18);--glass:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);--ease:cubic-bezier(.2,.8,.2,1)}
-[data-theme=green]{--bg:#0a1411;--blue:#00a86b;--blue2:#19d68a;--go:#10c97a;--soft:#7fe6b8;--glow:rgba(16,201,122,.42);--tint:rgba(16,201,122,.16)}
-*{box-sizing:border-box;margin:0}
-html{background:var(--bg);color:#fff;scrollbar-width:thin;scrollbar-color:var(--blue) var(--bg);transition:background .8s}
-html.lenis,html.lenis body{height:auto}
-body{font-family:'Rubik',system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--blue2));border-radius:8px}
-::selection{background:var(--blue)}
-:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:8px}
-a{color:inherit}.ltr{direction:ltr;unicode-bidi:isolate}
-#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+:root{
+  --navy:#0c1838;--blue:#0052cc;--bright:#0076ff;--sky:#e8f1ff;--bg:#f6f9ff;--card:#fff;
+  --ink:#0f172a;--text:#334155;--muted:#64748b;--line:#e2e8f0;--ok:#059669;--warn:#e11d48;
+  --grad:linear-gradient(135deg,#0c1838 0%,#0052cc 60%,#0076ff 100%);
+  --shadow:0 24px 60px -24px rgba(12,24,56,.35);--r:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font:16px/1.65 Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+h1,h2,h3{color:var(--ink);line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(1.9rem,3.6vw,2.8rem);font-weight:800}
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:700;color:var(--bright);background:var(--sky);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:620px}
+.center{text-align:center}.center .lead{margin-inline:auto}
 
-/* header */
-header{position:fixed;top:0;inset-inline:0;z-index:30;padding:calc(12px + env(safe-area-inset-top)) 0 12px;backdrop-filter:blur(14px);background:linear-gradient(rgba(11,15,25,.7),transparent)}
-header .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:21px;text-decoration:none;direction:ltr}
-.brand svg{width:32px;height:32px}.brand b{color:var(--go)}
-.hb{display:flex;gap:8px;align-items:center}
-.btn{display:inline-flex;gap:8px;align-items:center;border:0;cursor:pointer;font:700 15px 'Rubik';color:#fff;text-decoration:none;padding:13px 28px;border-radius:999px;background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 10px 34px var(--glow);will-change:transform}
-.btn.g{background:var(--glass);border:1px solid var(--line);box-shadow:none;backdrop-filter:blur(10px)}
-.btn.sm{padding:8px 16px;font-size:13px}
-.btn span{display:inline-block}
-.sw{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#0066fe,#0088ff);box-shadow:0 0 10px currentColor}
-[data-theme=blue] .sw{background:linear-gradient(135deg,#00a86b,#19d68a)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;border-radius:16px;font-weight:700;font-size:1rem;border:0;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 12px 30px -10px rgba(0,118,255,.55)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 36px -12px rgba(0,118,255,.6)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--bright)}
+.btn-sm{height:42px;padding:0 18px;font-size:.92rem;border-radius:12px}
 
-/* glass */
-.glass{background:var(--glass);border:1px solid var(--line);border-radius:26px;padding:26px;backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 30px 80px rgba(0,0,0,.35);transition:border-color .4s,box-shadow .4s}
-.glass:hover{border-color:var(--blue2);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 50px var(--glow)}
-.tilt{transform-style:preserve-3d;will-change:transform}
-.glass h3{font-size:21px;font-weight:800;margin-bottom:6px}.glass p,.lead{color:var(--sub)}
-.ic{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;font-size:25px;background:var(--tint);margin-bottom:14px}
-h2{font-size:clamp(28px,5vw,58px);font-weight:900;line-height:1.1;letter-spacing:-.03em;max-width:16ch}
-.lead{font-size:clamp(16px,2vw,19px);max-width:48ch;margin-top:16px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:44px;perspective:1000px}
-
-/* Layering: journey path = z1 (behind), all content sections = z2 (in front) */
-#land{position:relative;z-index:2}
-#journey{position:absolute;inset:0 auto auto 0;width:100%;z-index:1;pointer-events:none;overflow:visible}
-#land>section{position:relative;z-index:2}
-#journey .tr{fill:none;stroke:rgba(255,255,255,.08);stroke-width:2;stroke-dasharray:2 10}
-#journey .lv{fill:none;stroke:url(#jg);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 0 10px var(--blue2))}
-#journey .dt{fill:#fff;filter:drop-shadow(0 0 12px #fff)}#journey .ar{fill:var(--blue2);filter:drop-shadow(0 0 14px var(--blue2))}
-.st{transition:stop-color .8s}
+/* nav */
+header{position:sticky;top:0;z-index:50;background:rgba(246,249,255,.82);backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.35rem;color:var(--navy)}
+.brand img{width:36px;height:36px;border-radius:10px}
+.brand b{color:var(--bright);font-weight:800}
+.links{display:flex;gap:28px;font-weight:500;color:var(--text)}
+.links a:hover{color:var(--bright)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.lang{background:transparent;border:1.5px solid var(--line);color:var(--ink);font:600 .9rem Rubik,sans-serif;height:42px;padding:0 14px;border-radius:12px;cursor:pointer}
+.lang:hover{border-color:var(--bright)}
 
 /* hero */
-.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:110px 0 70px}
-.logo-box{width:min(280px,60vw);margin:0 auto;cursor:pointer}
-.logo-box svg{width:100%;overflow:visible;filter:drop-shadow(0 0 40px var(--glow))}
-.s-path{fill:none;stroke:url(#bg1);stroke-width:14;stroke-linecap:round}
-.bn{font-size:clamp(62px,13vw,150px);font-weight:900;letter-spacing:-.05em;line-height:1;direction:ltr;margin-top:6px}.bn i{font-style:normal;color:var(--go)}
-.subt{color:var(--sub);letter-spacing:.4em;font-size:clamp(11px,1.6vw,15px);font-weight:600;margin:12px 0 26px;direction:ltr}
-.hero h1{font-size:clamp(24px,4vw,42px);font-weight:800;margin-bottom:10px}
-.hero p{color:var(--sub);max-width:46ch;margin:0 auto 28px;font-size:clamp(16px,2vw,19px)}
-.cue{margin-top:40px;color:var(--sub);font-size:13px}
-section.sec{padding:clamp(70px,12vw,150px) 0}
+.hero{padding:64px 0 96px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-30% -10% auto auto;width:900px;height:900px;background:radial-gradient(closest-side,rgba(0,118,255,.16),transparent);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.4rem);font-weight:800;margin-bottom:20px}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin-bottom:32px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+.stores{display:flex;flex-wrap:wrap;gap:10px}
+.store{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;background:var(--navy);color:#fff;min-width:178px}
+.store svg{width:22px;height:22px;flex:none}
+.store small{display:block;font-size:.7rem;opacity:.75;line-height:1.1}
+.store span{font-weight:700;line-height:1.2}
+.trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;color:var(--muted);font-size:.92rem}
+.trust span{display:flex;align-items:center;gap:6px}
+.trust i{width:20px;height:20px;border-radius:50%;background:var(--sky);color:var(--bright);display:grid;place-items:center;font-style:normal;font-size:.75rem;font-weight:800}
+.hero-visual{position:relative;display:flex;justify-content:center;min-height:620px}
+.hero-visual .phone{position:relative;z-index:2}
+.float{position:absolute;z-index:3;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;font-size:.88rem;display:flex;gap:12px;align-items:center;animation:bob 6s ease-in-out infinite}
+.float b{display:block;color:var(--ink);font-size:.95rem}
+.float .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;background:var(--sky)}
+.f1{top:90px;inset-inline-start:-10px}
+.f2{bottom:110px;inset-inline-end:-6px;animation-delay:-3s}
+@keyframes bob{50%{transform:translateY(-10px)}}
 
-/* features on the path */
-.feat{display:flex;margin-block:clamp(56px,11vw,140px)}.feat.end{justify-content:flex-end}.feat .glass{width:min(450px,100%)}
-.tag{display:inline-block;font-size:13px;font-weight:700;color:var(--soft);margin-bottom:8px}
-.mini{margin-top:16px;border-radius:16px;background:rgba(0,0,0,.3);padding:14px;font-size:14px;display:grid;gap:8px}
-.row{display:flex;justify-content:space-between;gap:10px}.pos{color:#34d399;font-weight:700}.neg{color:#fb7185;font-weight:700}
-.bar{height:8px;border-radius:8px;background:rgba(255,255,255,.1);overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+/* phone mockup (styled after the real app) */
+.phone{width:290px;height:600px;border-radius:46px;background:#0b1020;padding:11px;box-shadow:0 40px 80px -30px rgba(12,24,56,.55),inset 0 0 0 2px #273047;flex:none}
+.screen{position:relative;height:100%;border-radius:36px;background:#f8fafc;overflow:hidden;font-size:12px;color:#0f172a}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:92px;height:26px;border-radius:20px;background:#0b1020;z-index:5}
+.scr{padding:44px 14px 14px;height:100%;display:flex;flex-direction:column;gap:10px}
+.app-head{background:var(--grad);border-radius:20px;padding:16px;color:#fff;box-shadow:0 12px 24px -12px rgba(0,82,204,.7)}
+.app-head small{opacity:.85;font-size:11px}
+.app-head h4{font-size:17px;font-weight:800;margin-top:2px}
+.pills{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 10px}
+.pill small{color:var(--muted);font-size:10px;display:block}
+.pill b{font-size:15px}
+.pos{color:var(--ok)}.neg{color:var(--warn)}
+.sect{font-weight:700;color:#334155;font-size:12px;margin-top:2px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.temoji{width:38px;height:38px;border-radius:12px;background:var(--sky);display:grid;place-items:center;font-size:18px;flex:none}
+.tcard b{display:block;font-size:13px}
+.tcard small{color:var(--muted);font-size:10.5px}
+.chip{margin-inline-start:auto;font-weight:700;font-size:11px;padding:4px 8px;border-radius:999px;white-space:nowrap}
+.chip.pos{background:#ecfdf5}.chip.neg{background:#fff1f2}.chip.zero{background:#f1f5f9;color:var(--muted)}
+.avs{display:flex;margin-top:3px}.avs i{width:16px;height:16px;border-radius:50%;border:2px solid #fff;margin-inline-end:-5px;font-style:normal;font-size:8px;display:grid;place-items:center;color:#fff}
+.fab{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 10px 20px -6px rgba(0,82,204,.7)}
+.bar{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;color:var(--ink)}
+.bar .back{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;background:#fff}
+.total{background:var(--grad);color:#fff;border-radius:18px;padding:14px}
+.total small{opacity:.85;font-size:10.5px}.total b{display:block;font-size:22px;font-weight:800}
+.debt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 10px;display:flex;align-items:center;gap:8px}
+.debt .who{font-size:11.5px}.debt .who b{font-size:12.5px}
+.pay{margin-inline-start:auto;background:var(--bright);color:#fff;border-radius:10px;padding:5px 9px;font-weight:700;font-size:10.5px}
+.row{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 10px}
+.row .e{width:28px;height:28px;border-radius:9px;background:#f1f5f9;display:grid;place-items:center;font-size:14px}
+.row b{display:block;font-size:12px}.row small{color:var(--muted);font-size:10px}
+.row .amt{margin-inline-start:auto;font-weight:700;font-size:12px}
+.day{font-weight:700;font-size:11px;color:var(--bright);background:var(--sky);border-radius:999px;padding:4px 10px;align-self:flex-start}
+.tl{display:flex;gap:10px}
+.tl time{font-weight:700;font-size:11px;color:var(--muted);width:36px;padding-top:9px;flex:none}
+.tl .row{flex:1}
+.nav-btn{margin-inline-start:auto;font-size:10px;font-weight:700;color:var(--bright);background:var(--sky);border-radius:8px;padding:4px 7px}
+.going{font-size:10px;color:var(--ok);font-weight:600}
+.check{width:20px;height:20px;border-radius:7px;border:2px solid #cbd5e1;flex:none;display:grid;place-items:center;font-size:11px;color:#fff}
+.check.on{background:var(--ok);border-color:var(--ok)}
+.row.done b{text-decoration:line-through;color:var(--muted)}
+.tag{margin-inline-start:auto;font-size:10px;font-weight:600;background:#f1f5f9;border-radius:8px;padding:3px 7px;color:#475569}
 
-/* demo */
-.demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.stage{perspective:1400px;display:grid;place-items:center}
-.phone{width:min(290px,74vw);aspect-ratio:9/19;border-radius:42px;padding:10px;background:linear-gradient(145deg,#243049,#0a0e18);border:1px solid var(--line);box-shadow:0 60px 120px var(--glow);position:relative;will-change:transform}
-.phone::after{content:"";position:absolute;top:17px;left:50%;translate:-50% 0;width:74px;height:20px;border-radius:99px;background:#05070c;z-index:4}
-.scr{position:relative;height:100%;border-radius:33px;overflow:hidden;background:#f8fafc;color:#0f172a;padding:34px 13px 13px;font-size:12px}
-.scr .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3}
-.sc{background:linear-gradient(135deg,#0c1838,var(--blue) 60%,var(--blue2));color:#fff;border-radius:16px;padding:13px;text-align:center;margin-bottom:11px}.sc b{display:block;font-size:21px}
-.si{background:#fff;border:1px solid #e2e8f0;border-radius:11px;padding:9px;margin-bottom:7px;display:flex;justify-content:space-between}
-.fab{position:absolute;bottom:15px;left:50%;translate:-50% 0;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:99px;padding:7px 22px;font-weight:800}
-.fl{position:absolute;z-index:5;border-radius:16px;padding:9px 13px;font-size:13px;font-weight:700;background:rgba(15,23,42,.85);border:1px solid var(--line)}
+/* sections */
+section{padding:96px 0}
+.sec-head{margin-bottom:56px}
+.sec-head h2{margin-bottom:14px}
+.white{background:#fff}
 
-/* launch */
-.launch{min-height:85svh;display:grid;place-items:center;text-align:center}
-.cta{padding:clamp(40px,7vw,80px) 22px;border-radius:38px;background:radial-gradient(ellipse at 50% 0,var(--glow),transparent 70%),var(--glass);border:1px solid var(--line);backdrop-filter:blur(20px)}
-.cta h2{margin-inline:auto}.stores{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
-footer{position:relative;z-index:2;padding:36px 0 calc(36px + env(safe-area-inset-bottom));border-top:1px solid var(--line);color:var(--sub);font-size:14px;background:rgba(11,15,25,.7);backdrop-filter:blur(10px)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}footer nav{display:flex;gap:18px;flex-wrap:wrap}footer a{text-decoration:none}footer a:hover{color:#fff}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.step{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:30px;position:relative}
+.white .step{background:var(--bg)}
+.step .num{width:44px;height:44px;border-radius:14px;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center;margin-bottom:18px;font-size:1.1rem}
+.step h3{font-size:1.25rem;margin-bottom:8px}
+.step p{color:var(--muted)}
 
-@media(max-width:860px){.demo{grid-template-columns:1fr}.feat,.feat.end{justify-content:center}.fl{display:none}.brand span{display:none}.btn.sm .lbl{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* features */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;transition:transform .25s,box-shadow .25s}
+.feat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.feat .ic{width:52px;height:52px;border-radius:16px;background:var(--sky);display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px}
+.feat h3{font-size:1.15rem;margin-bottom:8px}
+.feat p{color:var(--muted);font-size:.97rem}
+
+/* showcase */
+.show{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:96px}
+.show:last-child{margin-bottom:0}
+.show.flip .show-text{order:2}
+.show-text h3{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:14px}
+.show-text p{color:var(--muted);font-size:1.08rem;margin-bottom:20px}
+.ticks{list-style:none;display:grid;gap:10px}
+.ticks li{display:flex;gap:10px;align-items:flex-start}
+.ticks li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:#ecfdf5;color:var(--ok);display:grid;place-items:center;font-weight:800;font-size:.75rem;margin-top:2px}
+.show-visual{display:flex;justify-content:center;position:relative}
+.show-visual::before{content:"";position:absolute;inset:8% 10%;background:radial-gradient(closest-side,rgba(0,118,255,.18),transparent);z-index:0}
+.show-visual .phone{position:relative;z-index:1}
+
+/* privacy */
+.priv{background:var(--grad);color:#dbeafe;border-radius:32px;padding:56px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.priv h2{color:#fff;margin-bottom:12px}
+.priv p{color:#c7dcff;font-size:1.08rem}
+.priv ul{list-style:none;display:grid;gap:14px}
+.priv li{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px 16px;color:#fff;font-weight:500;display:flex;gap:12px;align-items:center}
+.priv li span{font-size:1.3rem}
+.priv a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+/* faq */
+.faq{max-width:820px;margin-inline:auto;display:grid;gap:12px}
+details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:0 22px;transition:box-shadow .2s}
+details[open]{box-shadow:var(--shadow)}
+summary{cursor:pointer;list-style:none;font-weight:700;color:var(--ink);padding:20px 0;display:flex;justify-content:space-between;gap:16px;font-size:1.05rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--bright);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:var(--muted)}
+
+/* final cta */
+.final{text-align:center;background:#fff;border:1px solid var(--line);border-radius:32px;padding:64px 24px;box-shadow:var(--shadow)}
+.final img{width:72px;height:72px;border-radius:20px;margin:0 auto 20px}
+.final h2{margin-bottom:12px}
+.final .lead{margin:0 auto 28px}
+.final .stores{justify-content:center}
+
+footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
+.foot{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:28px}
+.foot nav{display:flex;flex-wrap:wrap;gap:20px}
+.foot a:hover{color:var(--bright)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+
+/* responsive */
+@media (max-width:980px){
+  .hero-grid,.show,.priv{grid-template-columns:1fr}
+  .show.flip .show-text{order:0}
+  .hero{padding-top:32px}.hero-visual{min-height:0;margin-top:12px}
+  .steps,.feats{grid-template-columns:1fr 1fr}
+  .links{display:none}
+  .priv{padding:36px 24px}
+}
+@media (max-width:640px){
+  .steps,.feats{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .float{display:none}
+  .nav-cta .btn-primary{display:none}
+  .stores .store{flex:1;min-width:0}
+}
 </style>
 </head>
 <body>
-<canvas id="gl" aria-hidden="true"></canvas>
 
-<header><div class="wrap">
-  <a class="brand mag" href="#top" aria-label="SyncGo"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="40" cy="150" r="11" fill="#fff"/><path d="M40,150C130,150 130,105 100,95C70,85 70,50 150,50" fill="none" style="stroke:var(--go)" stroke-width="16" stroke-linecap="round"/><polygon points="142,34 174,50 142,66" style="fill:var(--blue2)"/></svg><span>Sync<b>Go</b></span></a>
-  <div class="hb">
-    <button class="btn g sm mag" id="theme" type="button" aria-label="Color theme"><i class="sw"></i><span class="lbl" data-t="themeBtn">ירוק</span></button>
-    <button class="btn g sm mag" id="lang" type="button"><span>English</span></button>
-    <a class="btn sm mag" href="#launch"><span data-t="cta">צא לדרך</span></a>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="SyncGo"><img src="logo.png" alt=""><span dir="ltr">Sync<b>Go</b></span></a>
+    <nav class="links" aria-label="Main">
+      <a href="#how" data-t="nav_how">איך זה עובד</a>
+      <a href="#features" data-t="nav_feat">יכולות</a>
+      <a href="#privacy" data-t="nav_priv">פרטיות</a>
+      <a href="#faq" data-t="nav_faq">שאלות נפוצות</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="lang" id="lang" type="button" aria-label="Language">English</button>
+      <a class="btn btn-primary btn-sm" href="#download" data-t="nav_cta">להורדה</a>
+    </div>
   </div>
-</div></header>
+</header>
 
-<main id="land">
-  <!-- Journey path sits BEHIND all content -->
-  <svg id="journey" aria-hidden="true"><defs><linearGradient id="jg" x1="0" y1="0" x2="0" y2="1"><stop class="st" offset="0" stop-color="#fff"/><stop class="st st1" offset=".25"/><stop class="st st2" offset="1"/></linearGradient></defs><path class="tr" id="jt"/><path class="lv" id="jl"/><circle class="dt" id="jd" r="9"/><g class="ar" id="ja"><polygon points="-14,-14 16,0 -14,14"/></g></svg>
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <span class="eyebrow" data-t="h_eyebrow">לטיולים, אירועים וכל מה שעושים ביחד</span>
+        <h1 data-t="h1" data-html>כל הקבוצה,<br><em>באותו מסלול.</em></h1>
+        <p class="lead" data-t="h_sub">מי חייב למי, מה המסלול ומי מביא מה. SyncGo מרכזת את כל הטיול באפליקציה אחת שמסתנכרנת בזמן אמת אצל כולם, בלי אקסלים ובלי ריבים על חשבונות.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#download" data-t="h_cta">אני רוצה לנסות</a>
+          <a class="btn btn-ghost" href="#how" data-t="h_cta2">איך זה עובד?</a>
+        </div>
+        <div class="trust">
+          <span><i>✓</i><b data-t="t1">חינם</b></span>
+          <span><i>✓</i><b data-t="t2">בלי פרסומות</b></span>
+          <span><i>✓</i><b data-t="t3">עברית ואנגלית</b></span>
+          <span><i>✓</i><b data-t="t4">עובד גם בלי קליטה</b></span>
+        </div>
+      </div>
 
-  <section class="hero" id="top" data-node="c"><div class="wrap">
-    <div class="logo-box mag" id="logo" role="img" aria-label="SyncGo logo">
-      <svg viewBox="0 0 200 200"><defs>
-        <linearGradient id="bg1" x1="0%" y1="100%" x2="100%" y2="0%"><stop class="st" offset="0%" stop-color="#fff"/><stop class="st st1" offset="60%"/><stop class="st st2" offset="100%"/></linearGradient>
-        <filter id="warp" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence id="turb" type="fractalNoise" baseFrequency=".02" numOctaves="2" seed="3"/><feDisplacementMap id="disp" in="SourceGraphic" scale="0"/></filter></defs>
-        <g filter="url(#warp)"><circle class="od" cx="40" cy="150" r="9" fill="#fff"/><path class="s-path" d="M 40,150 C 130,150 130,105 100,95 C 70,85 70,50 150,50"/><polygon class="at" points="142,38 168,50 142,62" style="fill:var(--blue2)"/></g></svg>
+      <div class="hero-visual rv">
+        <div class="float f1"><div class="ic">💸</div><div><b data-t="fl1b">נועה העבירה לדן ₪120</b><span data-t="fl1s">החוב נסגר ✓</span></div></div>
+        <div class="float f2"><div class="ic">🗺️</div><div><b data-t="fl2b">עודכן: יציאה ב-08:30</b><span data-t="fl2s">כל הקבוצה רואה מיד</span></div></div>
+        <div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div>
+          <div class="scr">
+            <div class="app-head"><small data-t="m_hello">שלום, נועה 👋</small><h4 data-t="m_title">האירועים והטיולים שלי</h4></div>
+            <div class="pills">
+              <div class="pill"><small data-t="m_owed">אתה זכאי לקבל</small><b class="pos">₪420</b></div>
+              <div class="pill"><small data-t="m_owe">אתה חייב</small><b class="neg">₪85</b></div>
+            </div>
+            <div class="sect" data-t="m_active">אירועים פעילים</div>
+            <div class="tcard"><div class="temoji">🏕️</div><div><b data-t="m_t1">קמפינג בצפון</b><small data-t="m_t1d">12–14 ביוני · 6 משתתפים</small>
+              <div class="avs"><i style="background:#0076ff">נ</i><i style="background:#0052cc">ד</i><i style="background:#059669">י</i><i style="background:#f59e0b">ש</i></div></div><span class="chip pos">+₪310</span></div>
+            <div class="tcard"><div class="temoji">🏖️</div><div><b data-t="m_t2">סוף שבוע באילת</b><small data-t="m_t2d">3–5 ביולי · 4 משתתפים</small></div><span class="chip neg">−₪85</span></div>
+            <div class="tcard"><div class="temoji">🎂</div><div><b data-t="m_t3">יום הולדת לדן</b><small data-t="m_t3d">20 ביוני · 11 משתתפים</small></div><span class="chip pos">+₪110</span></div>
+            <div class="tcard"><div class="temoji">✈️</div><div><b data-t="m_t4">רומא עם החבר׳ה</b><small data-t="m_t4d">ספטמבר · אירו → ₪</small></div><span class="chip zero" data-t="m_even">מאוזן</span></div>
+          </div>
+          <div class="fab">+</div>
+        </div></div>
+      </div>
     </div>
-    <div class="bn"><span>Sync</span><i>Go</i></div>
-    <div class="subt">EVENTS &amp; TEAM SYNC</div>
-    <h1 data-t="h1"></h1><p data-t="sub"></p>
-    <a class="btn mag" href="#launch"><span data-t="cta2"></span></a>
-    <div class="cue" data-t="cue"></div>
-  </div></section>
+  </section>
 
-  <section class="sec" data-node="l"><div class="wrap">
-    <h2 class="rv" data-t="o_h"></h2><p class="lead rv" data-t="o_p"></p>
-    <div class="cards">
-      <div class="glass tilt rv"><div class="ic">💡</div><h3 data-t="c1t"></h3><p data-t="c1d"></p></div>
-      <div class="glass tilt rv"><div class="ic">🤝</div><h3 data-t="c2t"></h3><p data-t="c2d"></p></div>
-      <div class="glass tilt rv"><div class="ic">🚀</div><h3 data-t="c3t"></h3><p data-t="c3d"></p></div>
+  <!-- HOW IT WORKS -->
+  <section class="white" id="how">
+    <div class="wrap">
+      <div class="sec-head center rv">
+        <span class="eyebrow" data-t="how_eb">איך זה עובד</span>
+        <h2 data-t="how_h">שלושה צעדים, וכולם על אותו דף</h2>
+        <p class="lead" data-t="how_p">לא צריך להסביר לאף אחד איך משתמשים. פותחים, מזמינים ומתחילים.</p>
+      </div>
+      <div class="steps">
+        <div class="step rv"><div class="num">1</div><h3 data-t="s1t">פותחים אירוע</h3><p data-t="s1d">טיול, חופשה, מסיבה או דירה משותפת. נותנים שם, תאריכים ומטבע, וזהו.</p></div>
+        <div class="step rv"><div class="num">2</div><h3 data-t="s2t">מזמינים את החבר׳ה</h3><p data-t="s2d">בוחרים חברים מאנשי הקשר. מי שכבר ב-SyncGo מצטרף מיד, ולכולם יש את אותה תמונה מעודכנת.</p></div>
+        <div class="step rv"><div class="num">3</div><h3 data-t="s3t">רושמים ונהנים</h3><p data-t="s3d">כל אחד מוסיף הוצאות, פעילויות וציוד. האפליקציה מחשבת מי חייב למי, ובסוף סוגרים חשבון בלחיצה.</p></div>
+      </div>
     </div>
-  </div></section>
+  </section>
 
-  <section class="sec"><div class="wrap">
-    <h2 class="rv" data-t="f_h"></h2><p class="lead rv" data-t="f_p"></p>
-    <div class="feat" data-node="r"><div class="glass tilt rv"><span class="tag" data-t="f1k"></span><h3 data-t="f1t"></h3><p data-t="f1d"></p>
-      <div class="mini"><div class="row"><span>🍕 Pizza</span><span class="ltr">₪240</span></div><div class="row"><span data-t="m_a"></span><span class="neg ltr">₪80</span></div></div></div></div>
-    <div class="feat end" data-node="l"><div class="glass tilt rv"><span class="tag" data-t="f2k"></span><h3 data-t="f2t"></h3><p data-t="f2d"></p>
-      <div class="mini"><div class="row"><span>🥾 09:00</span><span data-t="m_c"></span></div><div class="bar"><i data-w="72"></i></div></div></div></div>
-    <div class="feat" data-node="r"><div class="glass tilt rv"><span class="tag" data-t="f3k"></span><h3 data-t="f3t"></h3><p data-t="f3d"></p>
-      <div class="mini"><div class="row"><span>⛺ <span data-t="m_d"></span></span><span class="pos">✓</span></div><div class="row"><span>🛒 <span data-t="m_e"></span></span><span class="ltr">×2</span></div></div></div></div>
-  </div></section>
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head center rv">
+        <span class="eyebrow" data-t="f_eb">יכולות</span>
+        <h2 data-t="f_h">כל מה שקבוצה צריכה, במקום אחד</h2>
+        <p class="lead" data-t="f_p">במקום חמש קבוצות וואטסאפ, טבלה ופתקים: אפליקציה אחת שעובדת אצל כולם.</p>
+      </div>
+      <div class="feats">
+        <div class="feat rv"><div class="ic">💸</div><h3 data-t="ft1">חלוקת הוצאות</h3><p data-t="fd1">שווה בשווה, רק בין חלק מהמשתתפים או בסכומים ידניים. המאזן מתעדכן לבד.</p></div>
+        <div class="feat rv"><div class="ic">🤝</div><h3 data-t="ft2">מי חייב למי</h3><p data-t="fd2">האפליקציה מצמצמת את מספר ההעברות למינימום, ואפשר לסגור חוב בלחיצה דרך Bit.</p></div>
+        <div class="feat rv"><div class="ic">💱</div><h3 data-t="ft3">כמה מטבעות</h3><p data-t="fd3">משלמים באירו ומתחשבנים בשקלים. ההמרה נעשית לפי שער עדכני, ויש גם מחשבון המרה מהיר.</p></div>
+        <div class="feat rv"><div class="ic">🗺️</div><h3 data-t="ft4">מסלול ולוח זמנים</h3><p data-t="fd4">פעילויות לפי ימים ושעות, ניווט מהיר לכל נקודה, וכל אחד מסמן אם הוא מגיע.</p></div>
+        <div class="feat rv"><div class="ic">⛺</div><h3 data-t="ft5">ציוד וקניות</h3><p data-t="fd5">רשימה משותפת של מה צריך ומי מביא. מסמנים ✓ וכולם רואים מה כבר מכוסה.</p></div>
+        <div class="feat rv"><div class="ic">⚡</div><h3 data-t="ft6">סנכרון בזמן אמת</h3><p data-t="fd6">כל שינוי מופיע מיד אצל כולם, עם התראות על מה שחשוב. בשטח, בלי קליטה, אפשר להמשיך לצפות בנתונים.</p></div>
+      </div>
+    </div>
+  </section>
 
-  <section class="sec" data-node="c"><div class="wrap demo">
-    <div><h2 class="rv" data-t="d_h"></h2><p class="lead rv" data-t="d_p"></p></div>
-    <div class="stage"><div class="phone" id="phone">
-      <div class="fl" style="top:14%;inset-inline-start:-14%">💸 ₪120</div><div class="fl" style="bottom:18%;inset-inline-end:-12%">✅ <span data-t="f_ok"></span></div>
-      <div class="scr">
-        <!-- Real screenshot: save as screens/home.png next to this file. If missing, the tag removes itself and the CSS mock stays. -->
-        <img class="shot" src="screens/home.png" alt="" loading="lazy" onerror="this.remove()">
-        <div class="sc"><small data-t="s_l"></small><b>₪1,280</b><small>SyncGather</small></div>
-        <div class="si"><span>🏕️ <span data-t="s_1"></span></span><b>+₪80</b></div><div class="si"><span>🏖️ <span data-t="s_2"></span></span><b>-₪35</b></div><div class="si"><span>🎂 <span data-t="s_3"></span></span><b>₪0</b></div>
-        <div class="fab">+</div>
-      </div></div></div>
-  </div></section>
+  <!-- SHOWCASE -->
+  <section class="white">
+    <div class="wrap">
+      <div class="show">
+        <div class="show-text rv">
+          <span class="eyebrow" data-t="sh1_eb">הוצאות</span>
+          <h3 data-t="sh1_h">סוף לשאלה "רגע, כמה אני חייב?"</h3>
+          <p data-t="sh1_p">כל הוצאה נרשמת פעם אחת, והמאזן של כל משתתף מחושב אוטומטית. בסוף הטיול רואים בדיוק מי מעביר למי וכמה, בלי מחשבון ובלי מבוכה.</p>
+          <ul class="ticks"><li data-t="sh1_l1">חלוקה שווה, לחלק מהקבוצה או בסכומים שונים</li><li data-t="sh1_l2">מספר העברות מינימלי לסגירת כל החובות</li><li data-t="sh1_l3">סגירת חוב בלחיצה דרך Bit</li></ul>
+        </div>
+        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
+          <div class="bar"><span class="back">›</span><span data-t="m_t1">קמפינג בצפון</span></div>
+          <div class="total"><small data-t="mx_total">סה״כ הוצאות באירוע</small><b>₪3,480</b><small data-t="mx_bal">המאזן שלך: +₪310</small></div>
+          <div class="sect" data-t="mx_who">מי חייב למי</div>
+          <div class="debt"><div class="who"><b data-t="mx_d1">יואב ← נועה</b><br><span class="neg">₪190</span></div><span class="pay" data-t="mx_pay">סגור עם Bit</span></div>
+          <div class="debt"><div class="who"><b data-t="mx_d2">שירה ← נועה</b><br><span class="neg">₪120</span></div><span class="pay" data-t="mx_pay">סגור עם Bit</span></div>
+          <div class="sect" data-t="mx_list">הוצאות שבוצעו בפועל</div>
+          <div class="row"><span class="e">🛒</span><div><b data-t="mx_e1">קניות בסופר</b><small data-t="mx_e1d">שילמה נועה · כולם</small></div><span class="amt">₪860</span></div>
+          <div class="row"><span class="e">⛽</span><div><b data-t="mx_e2">דלק</b><small data-t="mx_e2d">שילם דן · 3 משתתפים</small></div><span class="amt">₪420</span></div>
+          <div class="row"><span class="e">🏕️</span><div><b data-t="mx_e3">חניון לילה</b><small data-t="mx_e3d">שילמה נועה · כולם</small></div><span class="amt">₪1,200</span></div>
+        </div><div class="fab">+</div></div></div></div>
+      </div>
 
-  <section class="launch" id="launch" data-node="c"><div class="wrap"><div class="cta">
-    <h2 class="rv" data-t="l_h"></h2><p class="lead rv" style="margin-inline:auto" data-t="l_p"></p>
-    <div class="stores"><a class="btn mag" href="#"><span>▶ Google Play · <span data-t="soon"></span></span></a><a class="btn g mag" href="#"><span> App Store · <span data-t="soon"></span></span></a></div>
-  </div></div></section>
+      <div class="show flip">
+        <div class="show-text rv">
+          <span class="eyebrow" data-t="sh2_eb">מסלול</span>
+          <h3 data-t="sh2_h">לוח זמנים שכולם באמת רואים</h3>
+          <p data-t="sh2_p">במקום לחפש בגלילה את ההודעה עם השעה, המסלול נמצא במקום אחד. משנים שעה, וכולם מקבלים עדכון.</p>
+          <ul class="ticks"><li data-t="sh2_l1">פעילויות לפי ימים ושעות</li><li data-t="sh2_l2">ניווט בלחיצה לכל נקודה</li><li data-t="sh2_l3">כל משתתף מסמן אם הוא מגיע</li></ul>
+        </div>
+        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
+          <div class="bar"><span class="back">›</span><span data-t="mi_title">מסלול, נקודות וניווט</span></div>
+          <span class="day" data-t="mi_day1">יום שישי · 12 ביוני</span>
+          <div class="tl"><time>08:30</time><div class="row"><span class="e">🚗</span><div><b data-t="mi_1">יציאה מתל אביב</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
+          <div class="tl"><time>11:00</time><div class="row"><span class="e">🥾</span><div><b data-t="mi_2">מסלול בנחל עמוד</b><small class="going" data-t="mi_g5">5 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
+          <div class="tl"><time>14:00</time><div class="row"><span class="e">🍽️</span><div><b data-t="mi_3">צהריים בראש פינה</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
+          <span class="day" data-t="mi_day2">שבת · 13 ביוני</span>
+          <div class="tl"><time>07:00</time><div class="row"><span class="e">🌅</span><div><b data-t="mi_4">זריחה בהר ארבל</b><small class="going" data-t="mi_g3">3 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
+          <div class="tl"><time>10:30</time><div class="row"><span class="e">🛶</span><div><b data-t="mi_5">קיאקים בירדן</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
+        </div><div class="fab">+</div></div></div></div>
+      </div>
+
+      <div class="show">
+        <div class="show-text rv">
+          <span class="eyebrow" data-t="sh3_eb">ציוד וקניות</span>
+          <h3 data-t="sh3_h">אף אחד לא שוכח את הפחמים</h3>
+          <p data-t="sh3_p">רשימה אחת לכל מה שצריך להביא ולקנות. משייכים כל פריט למישהו, מסמנים כשזה מוכן, ורואים מה עוד חסר.</p>
+          <ul class="ticks"><li data-t="sh3_l1">ציוד, משימות ורשימת קניות משותפת</li><li data-t="sh3_l2">שיוך כל פריט למשתתף</li><li data-t="sh3_l3">רואים מיד מה כבר מכוסה</li></ul>
+        </div>
+        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
+          <div class="bar"><span class="back">›</span><span data-t="mg_title">ציוד וקניות</span></div>
+          <div class="sect" data-t="mg_gear">⛺ ציוד ומשימות (6)</div>
+          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_1">אוהל ל-4</b></div><span class="tag" data-t="mg_a1">דן</span></div>
+          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_2">מנגל</b></div><span class="tag" data-t="mg_a2">יואב</span></div>
+          <div class="row"><span class="check"></span><div><b data-t="mg_3">פחמים</b></div><span class="tag" data-t="mg_a3">שירה</span></div>
+          <div class="row"><span class="check"></span><div><b data-t="mg_4">צידנית</b></div><span class="tag" data-t="mg_a4">נועה</span></div>
+          <div class="sect" data-t="mg_shop">🛒 קניות (4)</div>
+          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_5">מים, 3 שישיות</b></div><span class="tag" data-t="mg_a2">יואב</span></div>
+          <div class="row"><span class="check"></span><div><b data-t="mg_6">פיתות וחומוס</b></div><span class="tag" data-t="mg_a4">נועה</span></div>
+          <div class="row"><span class="check"></span><div><b data-t="mg_7">קפה לבוקר ☕</b></div><span class="tag" data-t="mg_a1">דן</span></div>
+        </div><div class="fab">+</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section id="privacy">
+    <div class="wrap">
+      <div class="priv rv">
+        <div>
+          <h2 data-t="p_h">הנתונים שלכם נשארים שלכם</h2>
+          <p data-t="p_p" data-html>אנחנו אוספים רק את מה שהאפליקציה צריכה כדי לעבוד, ולא מוכרים מידע לאף אחד. כל הפרטים ב<a href="privacy.html">מדיניות הפרטיות</a>.</p>
+        </div>
+        <ul>
+          <li><span>🚫</span><b data-t="p_1">בלי פרסומות ובלי מעקב פרסומי</b></li>
+          <li><span>🔒</span><b data-t="p_2">תקשורת מוצפנת, וכל אירוע גלוי רק לחברים בו</b></li>
+          <li><span>📇</span><b data-t="p_3">אנשי הקשר משמשים רק למציאת חברים ולא נשמרים</b></li>
+          <li><span>🗑️</span><b data-t="p_4">מוחקים את החשבון בכל רגע, מתוך האפליקציה</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="white" id="faq">
+    <div class="wrap">
+      <div class="sec-head center rv"><span class="eyebrow" data-t="q_eb">שאלות נפוצות</span><h2 data-t="q_h">יש שאלות? יש תשובות</h2></div>
+      <div class="faq">
+        <details class="rv"><summary data-t="q1">כמה זה עולה?</summary><p data-t="a1">SyncGo חינמית, ואין בה פרסומות.</p></details>
+        <details class="rv"><summary data-t="q2">כל המשתתפים צריכים להתקין את האפליקציה?</summary><p data-t="a2">כדי לראות את האירוע, להוסיף הוצאות ולקבל עדכונים, כן. ההרשמה לוקחת פחות מדקה עם Google או עם קוד שנשלח למייל.</p></details>
+        <details class="rv"><summary data-t="q3">איך מחושב מי חייב למי?</summary><p data-t="a3">כל הוצאה מתחלקת לפי מה שבחרתם: שווה בשווה, בין חלק מהמשתתפים או בסכומים ידניים. האפליקציה מחשבת את המאזן של כל אחד ומציעה את מספר ההעברות הקטן ביותר שסוגר את כל החובות.</p></details>
+        <details class="rv"><summary data-t="q4">אפשר לרשום הוצאות במטבע זר?</summary><p data-t="a4">כן. בוחרים מטבע מקומי ליעד ומטבע להתחשבנות, וההמרה נעשית לפי שער עדכני.</p></details>
+        <details class="rv"><summary data-t="q5">האפליקציה מעבירה כסף?</summary><p data-t="a5">לא. SyncGo מחשבת ומראה מי צריך להעביר למי. את ההעברה עצמה עושים באפליקציית תשלומים כמו Bit, ומסמנים באפליקציה שהחוב נסגר.</p></details>
+        <details class="rv"><summary data-t="q6">באיזה מכשירים זה עובד?</summary><p data-t="a6">SyncGo יוצאת קודם ל-Android ב-Google Play, ומיד אחר כך ל-iPhone ב-App Store.</p></details>
+        <details class="rv"><summary data-t="q7">איך מוחקים את החשבון?</summary><p data-t="a7" data-html>בהגדרות ואזור אישי, תחת ניהול חשבון. כל הפרטים בעמוד <a href="delete-account.html" style="color:var(--bright)">מחיקת חשבון</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download">
+    <div class="wrap">
+      <div class="final rv">
+        <img src="logo.png" alt="SyncGo">
+        <h2 data-t="d_h">מוכנים לצאת לדרך?</h2>
+        <p class="lead" data-t="d_p">SyncGo יוצאת בקרוב. האירוע הראשון שלכם במרחק דקה.</p>
+        <div class="stores">
+          <span class="store" aria-label="Google Play">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.8v18.4c0 .5.5.8 1 .6l15.6-8.9c.5-.3.5-1 0-1.3L5 2.2c-.5-.2-1 .1-1 .6z"/></svg>
+            <div><small data-t="soon">בקרוב ב-</small><span>Google Play</span></div>
+          </span>
+          <span class="store" aria-label="App Store">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="3.5"/><rect x="10" y="18.3" width="4" height="1.2" rx=".6" fill="#0c1838"/></svg>
+            <div><small data-t="soon">בקרוב ב-</small><span>App Store</span></div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer><div class="wrap"><span>© <span id="y"></span> SyncGo</span>
-  <nav><a href="privacy.html" data-t="privacy"></a><a href="terms.html" data-t="terms"></a><a href="delete-account.html" data-t="del"></a><a href="mailto:support@syncgo.app">support@syncgo.app</a></nav></div></footer>
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><img src="logo.png" alt=""><span dir="ltr">Sync<b>Go</b></span></a>
+    <nav>
+      <a href="privacy.html" data-t="privacy">מדיניות פרטיות</a>
+      <a href="terms.html" data-t="terms">תנאי שימוש</a>
+      <a href="delete-account.html" data-t="del">מחיקת חשבון</a>
+      <a href="mailto:support@syncgo.app">support@syncgo.app</a>
+    </nav>
+    <span>© <span id="yr">2026</span> SyncGo</span>
+  </div>
+</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script>
-(() => {
-'use strict';
-const $ = (s, c = document) => c.querySelector(s), $$ = (s, c = document) => [...c.querySelectorAll(s)];
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer:fine)').matches, small = innerWidth < 860;
-const root = document.documentElement;
-$('#y').textContent = new Date().getFullYear();
-const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (_) {} };
-
-/* ===== Palettes (CSS side lives in :root / [data-theme=green]; GL side below) ===== */
-const PAL = {
-  blue:  { a: [0, .40, 1], b: [0, .53, 1], d: [.043, .059, .098], s1: '#0066fe', s2: '#0088ff', meta: '#0b0f19' },
-  green: { a: [.06, .70, .44], b: [.10, .84, .54], d: [.039, .078, .067], s1: '#00a86b', s2: '#19d68a', meta: '#0a1411' }
-};
-const cur = { a: [...PAL.blue.a], b: [...PAL.blue.b], d: [...PAL.blue.d] };   // tweened live values read by shaders
-function setTheme(n, instant){
-  const p = PAL[n]; root.dataset.theme = n; store('theme', n);
-  $$('.st1').forEach(s => s.setAttribute('stop-color', p.s1)); $$('.st2').forEach(s => s.setAttribute('stop-color', p.s2));
-  $('meta[name=theme-color]').content = p.meta;
-  ['a', 'b', 'd'].forEach(k => instant ? (cur[k] = [...p[k]]) : gsap.to(cur[k], { 0: p[k][0], 1: p[k][1], 2: p[k][2], duration: 1.4, ease: 'power2.inOut' }));
-  $('#theme .lbl').textContent = T[root.lang][n === 'blue' ? 'themeBtn' : 'themeBtn2'];
-}
-$('#theme').onclick = () => setTheme(root.dataset.theme === 'blue' ? 'green' : 'blue');
-
-/* ===== i18n ===== */
 const T = {
- he:{themeBtn:'ירוק',themeBtn2:'כחול',cta:'צא לדרך',cta2:'צא לדרך',h1:'כל הקבוצה, באותו מסלול',sub:'חלוקת הוצאות, מסלול, ציוד ואלבומים משותפים. הכול מסתנכרן בזמן אמת, בלי אקסלים ובלי ריבים.',cue:'גלול כדי להתחיל את המסע',
-  o_h:'הכול מתחיל ברעיון אחד',o_p:'מישהו אומר "בואו ניסע". מה שקורה אחר כך קובע אם הטיול יהיה כיף או כאב ראש.',c1t:'רעיון',c1d:'פותחים אירוע ומזמינים חברים מאנשי הקשר.',c2t:'קבוצה',c2d:'כולם רואים אותה תמונת מצב, מעודכנת בזמן אמת.',c3t:'יציאה',c3d:'מתכננים, מחלקים ויוצאים לדרך בלי חשבון פתוח.',
-  f_h:'הסנכרון החכם',f_p:'המסלול עובר דרך כל מה שקבוצה צריכה.',f1k:'הוצאות משותפות',f1t:'מי חייב למי, מחושב לבד',f1d:'שווה, לנבחרים או ידנית. מטבע זר מומר בשרת לשער עדכני, וסוגרים חוב עם Bit.',m_a:'נועה חייבת לדן',
-  f2k:'מסלול',f2t:'לוח זמנים שכולם רואים',f2d:'פעילויות, שעות וניווט. כל אחד מסמן אם הוא מגיע.',m_c:'מסלול בנחל',f3k:'קבוצה',f3t:'אנשי קשר וציוד, מסונכרנים',f3d:'מוסיפים חברים שכבר באפליקציה, מחלקים ציוד וקניות, ומשתפים אלבום.',m_d:'אוהל',m_e:'פחמים',
-  d_h:'זה מה שיש לך ביד',d_p:'הזז את העכבר על המכשיר, או הטה אותו באצבע.',f_ok:'סגרנו',s_l:'סך הכול',s_1:'טיול צפון',s_2:'סוף שבוע באילת',s_3:'יום הולדת',
-  l_h:'מוכנים לצאת לדרך?',l_p:'פותחים אירוע ראשון תוך דקה.',soon:'בקרוב',privacy:'מדיניות פרטיות',terms:'תנאי שימוש',del:'מחיקת חשבון'},
- en:{themeBtn:'Green',themeBtn2:'Blue',cta:'Get started',cta2:'Get started',h1:'The whole group, on one route',sub:'Shared expenses, itinerary, gear and albums. Everything syncs in real time: no spreadsheets, no arguments.',cue:'Scroll to start the journey',
-  o_h:'It all starts with one idea',o_p:'Someone says "let\'s go". What happens next decides if the trip is fun or a headache.',c1t:'Idea',c1d:'Create an event and invite friends from your contacts.',c2t:'Group',c2d:'Everyone sees the same picture, updated in real time.',c3t:'Launch',c3d:'Plan, split and go, with no open tab left behind.',
-  f_h:'Smart sync',f_p:'The route runs through everything a group needs.',f1k:'Shared expenses',f1t:'Who owes whom, calculated for you',f1d:'Equal, selected people or manual. Foreign currency converts on the server at a current rate, and you settle up with Bit.',m_a:'Noa owes Dan',
-  f2k:'Itinerary',f2t:'A schedule everyone can see',f2d:'Activities, times and navigation. Everyone marks if they are coming.',m_c:'Creek hike',f3k:'Group',f3t:'Contacts and gear, in sync',f3d:'Add friends already on the app, assign gear and shopping, and share an album.',m_d:'Tent',m_e:'Charcoal',
-  d_h:'This is what you hold',d_p:'Move your mouse over the phone, or tilt it with a finger.',f_ok:'Settled',s_l:'Total',s_1:'North trip',s_2:'Eilat weekend',s_3:'Birthday',
-  l_h:'Ready to go?',l_p:'Create your first event in a minute.',soon:'Coming soon',privacy:'Privacy policy',terms:'Terms of use',del:'Delete account'}};
+ en:{
+  nav_how:'How it works',nav_feat:'Features',nav_priv:'Privacy',nav_faq:'FAQ',nav_cta:'Get the app',
+  h_eyebrow:'For trips, events and everything you do together',
+  h1:'The whole group,<br><em>on one route.</em>',
+  h_sub:'Who owes whom, what\'s the plan and who brings what. SyncGo keeps the whole trip in one app that syncs in real time for everyone: no spreadsheets, no arguments about money.',
+  h_cta:'I want to try it',h_cta2:'How does it work?',t1:'Free',t2:'No ads',t3:'Hebrew & English',t4:'Works offline too',
+  fl1b:'Noa paid Dan ₪120',fl1s:'Debt settled ✓',fl2b:'Updated: leaving at 08:30',fl2s:'The whole group sees it instantly',
+  m_hello:'Hello, Noa 👋',m_title:'My events & trips',m_owed:'You are owed',m_owe:'You owe',m_active:'Active events',
+  m_t1:'Camping up north',m_t1d:'Jun 12–14 · 6 people',m_t2:'Eilat weekend',m_t2d:'Jul 3–5 · 4 people',m_t3:'Dan\'s birthday',m_t3d:'Jun 20 · 11 people',m_t4:'Rome with the crew',m_t4d:'September · EUR → ₪',m_even:'Settled',
+  how_eb:'How it works',how_h:'Three steps, and everyone is on the same page',how_p:'Nobody needs a tutorial. Open it, invite, and go.',
+  s1t:'Create an event',s1d:'A trip, a vacation, a party or a shared flat. Give it a name, dates and a currency. That\'s it.',
+  s2t:'Invite your friends',s2d:'Pick friends from your contacts. Anyone already on SyncGo joins instantly, and everyone sees the same up-to-date picture.',
+  s3t:'Add things and enjoy',s3d:'Everyone adds expenses, plans and gear. The app works out who owes whom, and at the end you settle up in a tap.',
+  f_eb:'Features',f_h:'Everything a group needs, in one place',f_p:'Instead of five WhatsApp groups, a spreadsheet and notes: one app that works for everyone.',
+  ft1:'Split expenses',fd1:'Equally, between some of the group or by custom amounts. Balances update on their own.',
+  ft2:'Who owes whom',fd2:'The app keeps the number of transfers to a minimum, and you can settle a debt in a tap with Bit (in Israel).',
+  ft3:'Multiple currencies',fd3:'Pay in euros, settle in shekels or dollars. Conversion uses a current rate, plus a quick currency converter.',
+  ft4:'Itinerary & schedule',fd4:'Activities by day and time, one-tap navigation to every stop, and everyone marks if they\'re coming.',
+  ft5:'Gear & shopping',fd5:'A shared list of what\'s needed and who brings it. Tick it off and everyone sees what\'s covered.',
+  ft6:'Real-time sync',fd6:'Every change shows up for everyone instantly, with notifications for what matters. Out of signal? You can still view your data.',
+  sh1_eb:'Expenses',sh1_h:'No more "wait, how much do I owe?"',sh1_p:'Every expense is entered once, and each person\'s balance is calculated automatically. At the end you see exactly who pays whom and how much: no calculator, no awkwardness.',
+  sh1_l1:'Split equally, between some people or by custom amounts',sh1_l2:'The fewest transfers to settle every debt',sh1_l3:'Settle up in a tap with Bit',
+  mx_total:'Total spent in this event',mx_bal:'Your balance: +₪310',mx_who:'Who owes whom',mx_d1:'Yoav → Noa',mx_d2:'Shira → Noa',mx_pay:'Settle with Bit',mx_list:'Recorded expenses',
+  mx_e1:'Groceries',mx_e1d:'Paid by Noa · everyone',mx_e2:'Fuel',mx_e2d:'Paid by Dan · 3 people',mx_e3:'Campsite',mx_e3d:'Paid by Noa · everyone',
+  sh2_eb:'Itinerary',sh2_h:'A schedule everyone actually sees',sh2_p:'Instead of scrolling for the message with the time, the plan lives in one place. Change a time and everyone gets an update.',
+  sh2_l1:'Activities by day and time',sh2_l2:'One-tap navigation to every stop',sh2_l3:'Everyone marks if they\'re coming',
+  mi_title:'Route, stops & navigation',mi_day1:'Friday · June 12',mi_day2:'Saturday · June 13',mi_1:'Leaving Tel Aviv',mi_2:'Amud stream hike',mi_3:'Lunch in Rosh Pina',mi_4:'Sunrise on Mt. Arbel',mi_5:'Kayaks on the Jordan',
+  mi_g6:'6 going',mi_g5:'5 going',mi_g3:'3 going',mi_nav:'Navigate',
+  sh3_eb:'Gear & shopping',sh3_h:'Nobody forgets the charcoal',sh3_p:'One list for everything to bring and buy. Assign each item to someone, tick it when it\'s ready and see what\'s still missing.',
+  sh3_l1:'Gear, tasks and a shared shopping list',sh3_l2:'Assign every item to a person',sh3_l3:'See at a glance what\'s covered',
+  mg_title:'Gear & shopping',mg_gear:'⛺ Gear & tasks (6)',mg_shop:'🛒 Shopping (4)',mg_1:'4-person tent',mg_2:'Grill',mg_3:'Charcoal',mg_4:'Cooler',mg_5:'Water, 3 six-packs',mg_6:'Pita & hummus',mg_7:'Morning coffee ☕',
+  mg_a1:'Dan',mg_a2:'Yoav',mg_a3:'Shira',mg_a4:'Noa',
+  p_h:'Your data stays yours',p_p:'We collect only what the app needs to work, and we never sell data to anyone. Full details in the <a href="privacy.html">privacy policy</a>.',
+  p_1:'No ads and no ad tracking',p_2:'Encrypted traffic, and each event is visible only to its members',p_3:'Contacts are used only to find friends, and are not stored',p_4:'Delete your account at any time, from inside the app',
+  q_eb:'FAQ',q_h:'Questions? Answers.',
+  q1:'How much does it cost?',a1:'SyncGo is free, with no ads.',
+  q2:'Does everyone need to install the app?',a2:'To see the event, add expenses and get updates, yes. Signing up takes less than a minute with Google or a code sent to your email.',
+  q3:'How is "who owes whom" calculated?',a3:'Each expense is split the way you choose: equally, between some members or by custom amounts. The app calculates everyone\'s balance and suggests the fewest transfers that settle all debts.',
+  q4:'Can I add expenses in a foreign currency?',a4:'Yes. Pick a local currency for the destination and a settlement currency, and conversion uses a current rate.',
+  q5:'Does the app move money?',a5:'No. SyncGo calculates and shows who should pay whom. The transfer itself happens in a payments app such as Bit, and you mark the debt as settled in SyncGo.',
+  q6:'Which devices does it work on?',a6:'SyncGo launches first on Android in Google Play, followed shortly by iPhone in the App Store.',
+  q7:'How do I delete my account?',a7:'In Settings & Account, under Account management. Full details on the <a href="delete-account.html" style="color:var(--bright)">delete account</a> page.',
+  d_h:'Ready to go?',d_p:'SyncGo is launching soon. Your first event is a minute away.',soon:'Coming soon to',
+  privacy:'Privacy policy',terms:'Terms of use',del:'Delete account',
+  title:'SyncGo · The whole group, on one route'
+ }
+};
+const root = document.documentElement;
+const HE = {};
+document.querySelectorAll('[data-t]').forEach(el => { HE[el.dataset.t] = el.hasAttribute('data-html') ? el.innerHTML : el.textContent; });
+HE.title = document.title;
+T.he = HE;
+
 function setLang(l){
-  root.lang = l; root.dir = l === 'he' ? 'rtl' : 'ltr'; store('lang', l);
-  $$('[data-t]').forEach(n => n.textContent = T[l][n.dataset.t]);
-  $('#lang span').textContent = l === 'he' ? 'English' : 'עברית';
-  $('#theme .lbl').textContent = T[l][root.dataset.theme === 'blue' ? 'themeBtn' : 'themeBtn2'];
-  document.title = l === 'he' ? 'SyncGo: ניהול הוצאות קבוצתיות וטיולים' : 'SyncGo: group expenses & trips';
-  setTimeout(() => { layoutPath(); ScrollTrigger.refresh(); }, 80);
+  root.lang = l; root.dir = l === 'he' ? 'rtl' : 'ltr';
+  const d = T[l];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const v = d[el.dataset.t]; if (v == null) return;
+    if (el.hasAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
+  });
+  document.title = d.title;
+  document.getElementById('lang').textContent = l === 'he' ? 'English' : 'עברית';
+  document.querySelectorAll('.back').forEach(b => b.textContent = l === 'he' ? '›' : '‹');
+  try { localStorage.setItem('lang', l); } catch(e){}
 }
-$('#lang').onclick = () => setLang(root.lang === 'he' ? 'en' : 'he');
+document.getElementById('lang').onclick = () => setLang(root.lang === 'he' ? 'en' : 'he');
+let start = null;
+try { start = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang'); } catch(e){}
+if (start !== 'he' && start !== 'en') start = (navigator.language || '').startsWith('he') ? 'he' : 'en';
+if (start !== 'he') setLang(start);
 
-/* ===== Smooth scroll ===== */
-gsap.registerPlugin(ScrollTrigger);
-let lenis = null;
-if (!reduce) { lenis = new Lenis({ lerp: .085 }); lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); }
-document.addEventListener('click', e => {
-  const a = e.target.closest('a[href^="#"]'); if (!a || a.getAttribute('href').length < 2) return;
-  const el = $(a.getAttribute('href')); if (!el) return; e.preventDefault();
-  lenis ? lenis.scrollTo(el, { duration: 1.5 }) : el.scrollIntoView({ behavior: 'smooth' });
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const hdr = document.getElementById('hdr');
+addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .12, rootMargin: '0px 0px -40px 0px' }) : null;
+document.querySelectorAll('.rv').forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 80 + 'ms';
+  io ? io.observe(el) : el.classList.add('in');
 });
-
-/* ===== Background: calm "event flow" =====
-   1) shader: slow contour lines that flow like routes + soft aurora glows
-   2) nodes: people drifting along the flow field; they gently gather near the cursor and link up when close */
-const mouse = { x: 0, y: 0, tx: 0, ty: 0 }; let scrollP = 0;
-(function(){
-  const canvas = $('#gl'); let r;
-  try { r = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' }); }
-  catch (_) { canvas.style.background = 'radial-gradient(circle at 50% 30%,#0a2a66,#0b0f19 70%)'; return; }
-  r.setPixelRatio(Math.min(devicePixelRatio, 1.5)); r.autoClear = false;
-  const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
-
-  const bg = new THREE.Scene(), oc = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  const bm = new THREE.ShaderMaterial({ depthTest: false,
-    uniforms: { t: { value: 0 }, m: { value: new THREE.Vector2() }, s: { value: 0 }, r: { value: 1 }, ca: { value: V3(cur.a) }, cb: { value: V3(cur.b) }, cd: { value: V3(cur.d) } },
-    vertexShader: 'varying vec2 v;void main(){v=uv;gl_Position=vec4(position,1.);}',
-    fragmentShader: `precision mediump float;varying vec2 v;uniform float t,s,r;uniform vec2 m;uniform vec3 ca,cb,cd;
-      float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-      float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
-      void main(){
-        vec2 p=vec2(v.x*r,v.y+s*.6);
-        // flow field: gently bending bands that read as routes crossing the screen
-        float f=p.y*1.6+.9*n(p*.8+vec2(t*.025,0.))+.35*sin(p.x*1.1+t*.08)+m.x*.08;
-        float w=abs(fract(f*3.)-.5);
-        float line=(1.-smoothstep(0.,.035,w))*.55+(1.-smoothstep(0.,.16,w))*.12;
-        float band=.35+.65*n(p*.5+vec2(0.,t*.02));
-        vec3 c=cd+ca*line*band*.16;
-        // soft aurora glows drifting slowly
-        c+=cb*.10*exp(-length(v-vec2(.25+.08*sin(t*.07),.7))*2.6);
-        c+=ca*.10*exp(-length(v-vec2(.8,.3+.08*cos(t*.06)))*2.4);
-        c+=cb*.12*exp(-length((v-(m*.5+.5))*vec2(r,1.))*3.);
-        c*=smoothstep(1.4,.3,length(v-.5));
-        gl_FragColor=vec4(c,1.);}` });
-  bg.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bm));
-
-  const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(60, 1, .1, 100); cam.position.z = 12;
-  const N = small ? 55 : 120, MAXL = N * 6;
-  const P = new Float32Array(N * 3), ph = new Float32Array(N), sz = new Float32Array(N);
-  const bounds = { w: 12, h: 12 };
-  for (let i = 0; i < N; i++) { P[i*3] = (Math.random()-.5)*24; P[i*3+1] = (Math.random()-.5)*24; P[i*3+2] = (Math.random()-.5)*4; ph[i] = Math.random()*6.28; sz[i] = 3 + Math.random()*5; }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.BufferAttribute(P, 3)); g.setAttribute('ph', new THREE.BufferAttribute(ph, 1)); g.setAttribute('sz', new THREE.BufferAttribute(sz, 1));
-  const pm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { t: { value: 0 }, px: { value: r.getPixelRatio() }, cb: { value: V3(cur.b) } },
-    vertexShader: `uniform float t,px;attribute float ph,sz;varying float a;
-      void main(){vec4 mv=modelViewMatrix*vec4(position,1.);a=.55+.45*sin(t*.7+ph);gl_PointSize=sz*px*(1.+.25*a)*(40./-mv.z);gl_Position=projectionMatrix*mv;}`,
-    fragmentShader: `precision mediump float;uniform vec3 cb;varying float a;
-      void main(){float d=length(gl_PointCoord-.5)*2.;if(d>1.)discard;float k=exp(-d*d*4.5);gl_FragColor=vec4(mix(cb,vec3(1.),k*.6),k*.55*a);}` });
-  const pts = new THREE.Points(g, pm); sc.add(pts);
-
-  // links between nearby nodes
-  const L = new Float32Array(MAXL * 6), lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(L, 3).setUsage(THREE.DynamicDrawUsage));
-  const lm = new THREE.LineBasicMaterial({ transparent: true, opacity: .16, blending: THREE.AdditiveBlending, depthWrite: false, color: new THREE.Color().setRGB(cur.b[0], cur.b[1], cur.b[2]) });
-  sc.add(new THREE.LineSegments(lg, lm));
-
-  const rs = () => { r.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); bm.uniforms.r.value = cam.aspect;
-    bounds.h = Math.tan(Math.PI / 6) * 12 * 1.5; bounds.w = bounds.h * cam.aspect * 1.2; };
-  rs(); addEventListener('resize', rs);
-  addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = -(e.clientY / innerHeight * 2 - 1); }, { passive: true });
-  let vis = true; document.addEventListener('visibilitychange', () => vis = !document.hidden);
-  const ck = new THREE.Clock();
-
-  r.setAnimationLoop(() => {
-    if (!vis) return;
-    const dt = Math.min(ck.getDelta(), .05), t = reduce ? 0 : ck.elapsedTime;
-    mouse.x += (mouse.tx - mouse.x) * .05; mouse.y += (mouse.ty - mouse.y) * .05;
-    const mx = mouse.x * bounds.w * .55, my = mouse.y * bounds.h * .45 - cam.position.y;
-    if (!reduce) for (let i = 0; i < N; i++) {
-      let x = P[i*3], y = P[i*3+1];
-      const ang = Math.sin(x * .28 + t * .08) + Math.cos(y * .33 - t * .06);             // slow flow field
-      let vx = Math.cos(ang) * .35, vy = Math.sin(ang) * .22;
-      const dx = mx - x, dy = my - y, d2 = dx*dx + dy*dy;
-      if (d2 < 30) { const k = .06 * (1 - d2 / 30); vx += dx * k; vy += dy * k; }       // people gather near the cursor
-      x += vx * dt; y += vy * dt;
-      if (x > bounds.w) x = -bounds.w; else if (x < -bounds.w) x = bounds.w;
-      if (y > bounds.h) y = -bounds.h; else if (y < -bounds.h) y = bounds.h;
-      P[i*3] = x; P[i*3+1] = y;
-    }
-    g.attributes.position.needsUpdate = true;
-    let n = 0; const R2 = 4.2;
-    for (let i = 0; i < N && n < MAXL; i++) for (let j = i + 1; j < N && n < MAXL; j++) {
-      const dx = P[i*3] - P[j*3], dy = P[i*3+1] - P[j*3+1];
-      if (dx*dx + dy*dy < R2) { L.set([P[i*3], P[i*3+1], P[i*3+2], P[j*3], P[j*3+1], P[j*3+2]], n * 6); n++; }
-    }
-    lg.setDrawRange(0, n * 2); lg.attributes.position.needsUpdate = true;
-    lm.color.setRGB(cur.b[0], cur.b[1], cur.b[2]);
-
-    bm.uniforms.t.value = pm.uniforms.t.value = t; bm.uniforms.m.value.set(mouse.x, mouse.y); bm.uniforms.s.value = scrollP;
-    bm.uniforms.ca.value.set(...cur.a); bm.uniforms.cb.value.set(...cur.b); bm.uniforms.cd.value.set(...cur.d); pm.uniforms.cb.value.set(...cur.b);
-    cam.position.y = -scrollP * 5;
-    r.clear(); r.render(bg, oc); r.clearDepth(); r.render(sc, cam);
-  });
-})();
-
-/* ===== Journey path (behind content) ===== */
-const land = $('#land'), svg = $('#journey'), jl = $('#jl'), jt = $('#jt'), jd = $('#jd'), ja = $('#ja');
-let len = 1, prog = 0;
-function layoutPath(){
-  const R = land.getBoundingClientRect(), H = land.offsetHeight, W = land.offsetWidth, edge = W < 860 ? .12 : .2, rtl = root.dir === 'rtl';
-  svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  const pts = $$('[data-node]', land).map(el => { const b = el.getBoundingClientRect(); let s = el.dataset.node;
-    if (!rtl && s !== 'c') s = s === 'l' ? 'r' : 'l';            // cards start on the left in LTR, so the path flips sides
-    return { x: s === 'c' ? W / 2 : s === 'r' ? W * edge : W * (1 - edge), y: b.top - R.top + b.height / 2 }; });
-  pts[0].y = $('.hero').getBoundingClientRect().bottom - R.top - 40;
-  let d = `M ${pts[0].x},${pts[0].y}`;
-  for (let i = 1; i < pts.length; i++) { const a = pts[i-1], b = pts[i], m = (a.y + b.y) / 2; d += ` C ${a.x},${m} ${b.x},${m} ${b.x},${b.y}`; }
-  jl.setAttribute('d', d); jt.setAttribute('d', d); len = jl.getTotalLength(); jl.style.strokeDasharray = len;
-  jd.setAttribute('cx', pts[0].x); jd.setAttribute('cy', pts[0].y); upd(prog);
-}
-function upd(p){
-  prog = p; jl.style.strokeDashoffset = len * (1 - p);
-  const l = len * p, a = jl.getPointAtLength(l), b = jl.getPointAtLength(Math.min(len, l + 2));
-  ja.setAttribute('transform', `translate(${a.x},${a.y}) rotate(${p > .985 ? 0 : Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI})`);
-}
-ScrollTrigger.create({ trigger: land, start: 'top top', end: 'bottom bottom', onUpdate: s => { scrollP = s.progress; upd(s.progress); } });
-
-/* ===== Interactions ===== */
-function intro(){
-  const p = $('.s-path'), L = p.getTotalLength();
-  gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); gsap.set('.at', { opacity: 0, scale: .2, transformOrigin: '155px 50px' }); gsap.set('.od', { scale: 0, transformOrigin: '40px 150px' });
-  gsap.timeline().to('.od', { scale: 1, duration: .6, ease: 'back.out(3)' }).to(p, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, '-=.1')
-    .to('.at', { opacity: 1, scale: 1, duration: .5, ease: 'back.out(3)' }, '-=.2').from('.bn span,.bn i', { yPercent: 110, opacity: 0, stagger: .12, duration: 1, ease: 'power3.out' }, '-=.5')
-    .from('.subt,.hero h1,.hero p,.hero .btn,.cue', { y: 28, opacity: 0, stagger: .1, duration: .8 }, '-=.5');
-}
-function magnetics(){
-  if (!fine || reduce) return;
-  $$('.mag').forEach(el => { const s = el.id === 'logo' ? .12 : .3, inn = $('span', el);
-    el.addEventListener('pointermove', e => { const b = el.getBoundingClientRect(), dx = e.clientX - (b.left + b.width / 2), dy = e.clientY - (b.top + b.height / 2);
-      gsap.to(el, { x: dx * s, y: dy * s, duration: .4 }); if (inn && el.id !== 'logo') gsap.to(inn, { x: dx * s * .5, y: dy * s * .5, duration: .4 }); });
-    el.addEventListener('pointerleave', () => { gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1,.3)' }); if (inn) gsap.to(inn, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1,.3)' }); }); });
-  const disp = $('#disp'), turb = $('#turb'), o = { s: 0 }, set = () => disp.setAttribute('scale', o.s);
-  $('#logo').addEventListener('pointerenter', () => { gsap.to(o, { s: 26, duration: .35, onUpdate: set }); gsap.to(turb, { attr: { baseFrequency: .035 }, duration: 1.2 }); });
-  $('#logo').addEventListener('pointerleave', () => { gsap.to(o, { s: 0, duration: 1.2, ease: 'elastic.out(1,.3)', onUpdate: set }); gsap.to(turb, { attr: { baseFrequency: .02 }, duration: 1.2 }); });
-}
-function tilts(){
-  if (reduce) return;
-  if (fine) $$('.tilt').forEach(c => {
-    c.addEventListener('pointermove', e => { const b = c.getBoundingClientRect(); gsap.to(c, { rotateY: ((e.clientX - b.left) / b.width - .5) * 12, rotateX: -((e.clientY - b.top) / b.height - .5) * 12, duration: .5 }); });
-    c.addEventListener('pointerleave', () => gsap.to(c, { rotateX: 0, rotateY: 0, duration: .9, ease: 'elastic.out(1,.4)' }));
-  });
-  const ph = $('#phone'), stg = $('.stage'), st = { sx: 0, sy: 0, px: 0, py: 0 }, ap = () => gsap.set(ph, { rotateY: st.sy + st.px, rotateX: st.sx + st.py });
-  gsap.fromTo(st, { sy: 38, sx: 14 }, { sy: -18, sx: 0, ease: 'none', onUpdate: ap, scrollTrigger: { trigger: stg, start: 'top bottom', end: 'bottom top', scrub: .6 } });
-  stg.addEventListener('pointermove', e => { const b = stg.getBoundingClientRect(); gsap.to(st, { px: ((e.clientX - b.left) / b.width - .5) * 30, py: -((e.clientY - b.top) / b.height - .5) * 22, duration: .6, onUpdate: ap }); });
-  stg.addEventListener('pointerleave', () => gsap.to(st, { px: 0, py: 0, duration: 1, ease: 'elastic.out(1,.4)', onUpdate: ap }));
-  gsap.to('.fl', { y: -14, duration: 2.2, yoyo: true, repeat: -1, ease: 'sine.inOut', stagger: .6 });
-}
-function reveals(){
-  if (reduce) return;
-  $$('.rv').forEach(el => gsap.from(el, { y: 70, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
-  $$('.bar i').forEach(b => gsap.to(b, { width: b.dataset.w + '%', duration: 1.6, ease: 'power3.out', scrollTrigger: { trigger: b, start: 'top 90%', once: true } }));
-  gsap.to('.hero .wrap', { yPercent: 12, opacity: .2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-}
-
-/* ===== Boot ===== */
-const savedLang = store('lang') || (navigator.language.startsWith('he') ? 'he' : 'en');
-setTheme(store('theme') === 'green' ? 'green' : 'blue', true);
-setLang(savedLang);
-(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(() => { layoutPath(); intro(); magnetics(); tilts(); reveals(); ScrollTrigger.refresh(); }));
-let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layoutPath(); ScrollTrigger.refresh(); }, 200); });
-addEventListener('load', () => { layoutPath(); ScrollTrigger.refresh(); });
-})();
 </script>
 </body>
 </html>
