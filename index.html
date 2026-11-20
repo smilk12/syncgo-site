@@ -193,6 +193,21 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 
+/* real app screens (1:2, rendered from the app with demo data) */
+.phone.real{height:auto;padding:10px}
+.phone.real .screen{height:auto;aspect-ratio:1/2;background:#fff;border-radius:36px}
+.phone .shot{width:100%;height:100%;object-fit:cover}
+.phone.real .notch{top:5px;width:11px;height:11px;border-radius:50%}
+.strip{display:flex;gap:26px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 6px 30px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.strip::-webkit-scrollbar{display:none}
+.strip figure{flex:none;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;margin:0}
+.phone.sm{width:200px;border-radius:34px;padding:8px}
+.phone.sm .screen{border-radius:27px}
+.phone.sm .notch{top:4px;width:8px;height:8px}
+.strip figcaption{text-align:center;font-weight:700;color:var(--ink);font-size:.98rem;line-height:1.35}
+.strip figcaption small{display:block;font-weight:400;color:var(--muted);font-size:.86rem}
+@media (min-width:1120px){.strip{justify-content:center}}
+
 /* responsive */
 @media (max-width:980px){
   .hero-grid,.show,.priv{grid-template-columns:1fr}
@@ -250,24 +265,9 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
       </div>
 
       <div class="hero-visual rv">
-        <div class="float f1"><div class="ic">💸</div><div><b data-t="fl1b">נועה העבירה לדן ₪120</b><span data-t="fl1s">החוב נסגר ✓</span></div></div>
-        <div class="float f2"><div class="ic">🗺️</div><div><b data-t="fl2b">עודכן: יציאה ב-08:30</b><span data-t="fl2s">כל הקבוצה רואה מיד</span></div></div>
-        <div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div>
-          <div class="scr">
-            <div class="app-head"><small data-t="m_hello">שלום, נועה 👋</small><h4 data-t="m_title">האירועים והטיולים שלי</h4></div>
-            <div class="pills">
-              <div class="pill"><small data-t="m_owed">אתה זכאי לקבל</small><b class="pos">₪420</b></div>
-              <div class="pill"><small data-t="m_owe">אתה חייב</small><b class="neg">₪85</b></div>
-            </div>
-            <div class="sect" data-t="m_active">אירועים פעילים</div>
-            <div class="tcard"><div class="temoji">🏕️</div><div><b data-t="m_t1">קמפינג בצפון</b><small data-t="m_t1d">12–14 ביוני · 6 משתתפים</small>
-              <div class="avs"><i style="background:#0076ff">נ</i><i style="background:#0052cc">ד</i><i style="background:#059669">י</i><i style="background:#f59e0b">ש</i></div></div><span class="chip pos">+₪310</span></div>
-            <div class="tcard"><div class="temoji">🏖️</div><div><b data-t="m_t2">סוף שבוע באילת</b><small data-t="m_t2d">3–5 ביולי · 4 משתתפים</small></div><span class="chip neg">−₪85</span></div>
-            <div class="tcard"><div class="temoji">🎂</div><div><b data-t="m_t3">יום הולדת לדן</b><small data-t="m_t3d">20 ביוני · 11 משתתפים</small></div><span class="chip pos">+₪110</span></div>
-            <div class="tcard"><div class="temoji">✈️</div><div><b data-t="m_t4">רומא עם החבר׳ה</b><small data-t="m_t4d">ספטמבר · אירו → ₪</small></div><span class="chip zero" data-t="m_even">מאוזן</span></div>
-          </div>
-          <div class="fab">+</div>
-        </div></div>
+        <div class="float f1"><div class="ic">💸</div><div><b data-t="fl1b">איתי העביר לנועה ₪120</b><span data-t="fl1s">החוב נסגר ✓</span></div></div>
+        <div class="float f2"><div class="ic">🗺️</div><div><b data-t="fl2b">עודכן: יציאה ב-07:30</b><span data-t="fl2s">כל הקבוצה רואה מיד</span></div></div>
+        <div class="phone real"><div class="screen"><img class="shot" data-shot="01-trips" data-ta="alt_01" src="assets/img/screens/he/01-trips.webp" width="600" height="1200" alt="מסך האירועים והטיולים שלי ב-SyncGo, עם המאזן בכל אירוע" fetchpriority="high" decoding="async"><div class="notch"></div></div></div>
       </div>
     </div>
   </section>
@@ -317,17 +317,7 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
           <p data-t="sh1_p">כל הוצאה נרשמת פעם אחת, והמאזן של כל משתתף מחושב אוטומטית. בסוף הטיול רואים בדיוק מי מעביר למי וכמה, בלי מחשבון ובלי מבוכה.</p>
           <ul class="ticks"><li data-t="sh1_l1">חלוקה שווה, לחלק מהקבוצה או בסכומים שונים</li><li data-t="sh1_l2">מספר העברות מינימלי לסגירת כל החובות</li><li data-t="sh1_l3">סגירת חוב בלחיצה דרך Bit</li></ul>
         </div>
-        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
-          <div class="bar"><span class="back">›</span><span data-t="m_t1">קמפינג בצפון</span></div>
-          <div class="total"><small data-t="mx_total">סה״כ הוצאות באירוע</small><b>₪3,480</b><small data-t="mx_bal">המאזן שלך: +₪310</small></div>
-          <div class="sect" data-t="mx_who">מי חייב למי</div>
-          <div class="debt"><div class="who"><b data-t="mx_d1">יואב ← נועה</b><br><span class="neg">₪190</span></div><span class="pay" data-t="mx_pay">סגור עם Bit</span></div>
-          <div class="debt"><div class="who"><b data-t="mx_d2">שירה ← נועה</b><br><span class="neg">₪120</span></div><span class="pay" data-t="mx_pay">סגור עם Bit</span></div>
-          <div class="sect" data-t="mx_list">הוצאות שבוצעו בפועל</div>
-          <div class="row"><span class="e">🛒</span><div><b data-t="mx_e1">קניות בסופר</b><small data-t="mx_e1d">שילמה נועה · כולם</small></div><span class="amt">₪860</span></div>
-          <div class="row"><span class="e">⛽</span><div><b data-t="mx_e2">דלק</b><small data-t="mx_e2d">שילם דן · 3 משתתפים</small></div><span class="amt">₪420</span></div>
-          <div class="row"><span class="e">🏕️</span><div><b data-t="mx_e3">חניון לילה</b><small data-t="mx_e3d">שילמה נועה · כולם</small></div><span class="amt">₪1,200</span></div>
-        </div><div class="fab">+</div></div></div></div>
+        <div class="show-visual rv"><div class="phone real"><div class="screen"><img class="shot" data-shot="04-expenses" data-ta="alt_04" src="assets/img/screens/he/04-expenses.webp" width="600" height="1200" alt="סיכום הוצאות האירוע ומי חייב למי" loading="lazy" decoding="async"><div class="notch"></div></div></div></div>
       </div>
 
       <div class="show flip">
@@ -337,16 +327,7 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
           <p data-t="sh2_p">במקום לחפש בגלילה את ההודעה עם השעה, המסלול נמצא במקום אחד. משנים שעה, וכולם מקבלים עדכון.</p>
           <ul class="ticks"><li data-t="sh2_l1">פעילויות לפי ימים ושעות</li><li data-t="sh2_l2">ניווט בלחיצה לכל נקודה</li><li data-t="sh2_l3">כל משתתף מסמן אם הוא מגיע</li></ul>
         </div>
-        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
-          <div class="bar"><span class="back">›</span><span data-t="mi_title">מסלול, נקודות וניווט</span></div>
-          <span class="day" data-t="mi_day1">יום שישי · 12 ביוני</span>
-          <div class="tl"><time>08:30</time><div class="row"><span class="e">🚗</span><div><b data-t="mi_1">יציאה מתל אביב</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
-          <div class="tl"><time>11:00</time><div class="row"><span class="e">🥾</span><div><b data-t="mi_2">מסלול בנחל עמוד</b><small class="going" data-t="mi_g5">5 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
-          <div class="tl"><time>14:00</time><div class="row"><span class="e">🍽️</span><div><b data-t="mi_3">צהריים בראש פינה</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
-          <span class="day" data-t="mi_day2">שבת · 13 ביוני</span>
-          <div class="tl"><time>07:00</time><div class="row"><span class="e">🌅</span><div><b data-t="mi_4">זריחה בהר ארבל</b><small class="going" data-t="mi_g3">3 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
-          <div class="tl"><time>10:30</time><div class="row"><span class="e">🛶</span><div><b data-t="mi_5">קיאקים בירדן</b><small class="going" data-t="mi_g6">6 מגיעים</small></div><span class="nav-btn" data-t="mi_nav">ניווט</span></div></div>
-        </div><div class="fab">+</div></div></div></div>
+        <div class="show-visual rv"><div class="phone real"><div class="screen"><img class="shot" data-shot="06-itinerary" data-ta="alt_06" src="assets/img/screens/he/06-itinerary.webp" width="600" height="1200" alt="מסלול הטיול לפי ימים ושעות, עם ניווט ומי מגיע" loading="lazy" decoding="async"><div class="notch"></div></div></div></div>
       </div>
 
       <div class="show">
@@ -356,18 +337,41 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
           <p data-t="sh3_p">רשימה אחת לכל מה שצריך להביא ולקנות. משייכים כל פריט למישהו, מסמנים כשזה מוכן, ורואים מה עוד חסר.</p>
           <ul class="ticks"><li data-t="sh3_l1">ציוד, משימות ורשימת קניות משותפת</li><li data-t="sh3_l2">שיוך כל פריט למשתתף</li><li data-t="sh3_l3">רואים מיד מה כבר מכוסה</li></ul>
         </div>
-        <div class="show-visual rv"><div class="phone" aria-hidden="true"><div class="screen"><div class="notch"></div><div class="scr">
-          <div class="bar"><span class="back">›</span><span data-t="mg_title">ציוד וקניות</span></div>
-          <div class="sect" data-t="mg_gear">⛺ ציוד ומשימות (6)</div>
-          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_1">אוהל ל-4</b></div><span class="tag" data-t="mg_a1">דן</span></div>
-          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_2">מנגל</b></div><span class="tag" data-t="mg_a2">יואב</span></div>
-          <div class="row"><span class="check"></span><div><b data-t="mg_3">פחמים</b></div><span class="tag" data-t="mg_a3">שירה</span></div>
-          <div class="row"><span class="check"></span><div><b data-t="mg_4">צידנית</b></div><span class="tag" data-t="mg_a4">נועה</span></div>
-          <div class="sect" data-t="mg_shop">🛒 קניות (4)</div>
-          <div class="row done"><span class="check on">✓</span><div><b data-t="mg_5">מים, 3 שישיות</b></div><span class="tag" data-t="mg_a2">יואב</span></div>
-          <div class="row"><span class="check"></span><div><b data-t="mg_6">פיתות וחומוס</b></div><span class="tag" data-t="mg_a4">נועה</span></div>
-          <div class="row"><span class="check"></span><div><b data-t="mg_7">קפה לבוקר ☕</b></div><span class="tag" data-t="mg_a1">דן</span></div>
-        </div><div class="fab">+</div></div></div></div>
+        <div class="show-visual rv"><div class="phone real"><div class="screen"><img class="shot" data-shot="07-gear" data-ta="alt_07" src="assets/img/screens/he/07-gear.webp" width="600" height="1200" alt="רשימת ציוד ומשימות לפי מי מביא מה" loading="lazy" decoding="async"><div class="notch"></div></div></div></div>
+      </div>
+      <div class="show flip">
+        <div class="show-text rv">
+          <span class="eyebrow" data-t="sh4_eb">מטבעות</span>
+          <h3 data-t="sh4_h">בחו״ל? המרה בלחיצה</h3>
+          <p data-t="sh4_p">מחשבון מטבע מובנה עם שער עדכני, שכבר מכיר את מטבע היעד ואת מטבע ההתחשבנות של הטיול. משלמים באירו ומתחשבנים בשקלים.</p>
+          <ul class="ticks"><li data-t="sh4_l1">29 מטבעות נפוצים</li><li data-t="sh4_l2">השערים נשמרים בטלפון וזמינים גם בלי קליטה</li><li data-t="sh4_l3">הוצאה במטבע זר מומרת לבד במאזן</li></ul>
+        </div>
+        <div class="show-visual rv"><div class="phone real"><div class="screen"><img class="shot" data-shot="10-currency" data-ta="alt_10" src="assets/img/screens/he/10-currency.webp" width="600" height="1200" alt="מחשבון המרת מטבע עם שער עדכני" loading="lazy" decoding="async"><div class="notch"></div></div></div></div>
+      </div>
+
+      <div class="show">
+        <div class="show-text rv">
+          <span class="eyebrow" data-t="sh5_eb">תמונות</span>
+          <h3 data-t="sh5_h">כל התמונות של הטיול, במקום אחד</h3>
+          <p data-t="sh5_p">מוסיפים קישור לאלבום ב-Google Photos, ב-iCloud או בכל שירות אחר, וכל הקבוצה מוצאת אותו מיד בתוך האירוע. בלי לחפש בצ׳אט.</p>
+          <ul class="ticks"><li data-t="sh5_l1">אלבום לכל יום או לכל חוויה</li><li data-t="sh5_l2">רואים מי שיתף כל אלבום</li><li data-t="sh5_l3">נפתח בלחיצה מהטלפון</li></ul>
+        </div>
+        <div class="show-visual rv"><div class="phone real"><div class="screen"><img class="shot" data-shot="09-gallery" data-ta="alt_09" src="assets/img/screens/he/09-gallery.webp" width="600" height="1200" alt="אלבומי התמונות המשותפים של הטיול" loading="lazy" decoding="async"><div class="notch"></div></div></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section id="screens">
+    <div class="wrap">
+      <div class="sec-head center rv"><span class="eyebrow" data-t="sc_eb">הצצה לאפליקציה</span><h2 data-t="sc_h">ככה זה נראה בטלפון</h2><p class="lead" data-t="sc_p">מסכים אמיתיים מהאפליקציה, עם טיול לדוגמה.</p></div>
+      <div class="strip rv">
+        <figure><div class="phone real sm"><div class="screen"><img class="shot" data-shot="02-trip-hub" data-ta="alt_02" src="assets/img/screens/he/02-trip-hub.webp" width="600" height="1200" alt="מסך האירוע: תקציב והוצאות, ציוד וקניות, מסלול ותמונות" loading="lazy" decoding="async"><div class="notch"></div></div></div><figcaption><span data-t="scf1">כל הכלים של האירוע</span><small data-t="scs1">תקציב, ציוד, מסלול ותמונות</small></figcaption></figure>
+        <figure><div class="phone real sm"><div class="screen"><img class="shot" data-shot="05-add-expense" data-ta="alt_05" src="assets/img/screens/he/05-add-expense.webp" width="600" height="1200" alt="הוספת הוצאה חדשה עם מי שילם ואופן החלוקה" loading="lazy" decoding="async"><div class="notch"></div></div></div><figcaption><span data-t="scf2">הוספת הוצאה</span><small data-t="scs2">מי שילם ואיך מתחלקים</small></figcaption></figure>
+        <figure><div class="phone real sm"><div class="screen"><img class="shot" data-shot="03-members" data-ta="alt_03" src="assets/img/screens/he/03-members.webp" width="600" height="1200" alt="ניהול המשתתפים באירוע" loading="lazy" decoding="async"><div class="notch"></div></div></div><figcaption><span data-t="scf3">ניהול משתתפים</span><small data-t="scs3">מזמינים חברים מאנשי הקשר</small></figcaption></figure>
+        <figure><div class="phone real sm"><div class="screen"><img class="shot" data-shot="08-shopping" data-ta="alt_08" src="assets/img/screens/he/08-shopping.webp" width="600" height="1200" alt="רשימת קניות משותפת לפי קטגוריות" loading="lazy" decoding="async"><div class="notch"></div></div></div><figcaption><span data-t="scf4">רשימת קניות משותפת</span><small data-t="scs4">מסודרת לפי קטגוריות</small></figcaption></figure>
+        <figure><div class="phone real sm"><div class="screen"><img class="shot" data-shot="11-sign-in" data-ta="alt_11" src="assets/img/screens/he/11-sign-in.webp" width="600" height="1200" alt="מסך הכניסה: עם Google או קוד למייל" loading="lazy" decoding="async"><div class="notch"></div></div></div><figcaption><span data-t="scf5">כניסה בשניות</span><small data-t="scs5">עם Google או קוד למייל</small></figcaption></figure>
       </div>
     </div>
   </section>
@@ -449,9 +453,7 @@ const T = {
   h1:'The whole group,<br><em>on one route.</em>',
   h_sub:'Who owes whom, what\'s the plan and who brings what. SyncGo keeps the whole trip in one app that syncs in real time for everyone: no spreadsheets, no arguments about money.',
   h_cta:'I want to try it',h_cta2:'How does it work?',t1:'Free',t2:'No ads',t3:'Hebrew & English',t4:'Works offline too',
-  fl1b:'Noa paid Dan ₪120',fl1s:'Debt settled ✓',fl2b:'Updated: leaving at 08:30',fl2s:'The whole group sees it instantly',
-  m_hello:'Hello, Noa 👋',m_title:'My events & trips',m_owed:'You are owed',m_owe:'You owe',m_active:'Active events',
-  m_t1:'Camping up north',m_t1d:'Jun 12–14 · 6 people',m_t2:'Eilat weekend',m_t2d:'Jul 3–5 · 4 people',m_t3:'Dan\'s birthday',m_t3d:'Jun 20 · 11 people',m_t4:'Rome with the crew',m_t4d:'September · EUR → ₪',m_even:'Settled',
+  fl1b:'Ben paid Emma $40',fl1s:'Debt settled ✓',fl2b:'Updated: leaving at 07:30',fl2s:'The whole group sees it instantly',
   how_eb:'How it works',how_h:'Three steps, and everyone is on the same page',how_p:'Nobody needs a tutorial. Open it, invite, and go.',
   s1t:'Create an event',s1d:'A trip, a vacation, a party or a shared flat. Give it a name, dates and a currency. That\'s it.',
   s2t:'Invite your friends',s2d:'Pick friends from your contacts. Anyone already on SyncGo joins instantly, and everyone sees the same up-to-date picture.',
@@ -465,16 +467,10 @@ const T = {
   ft6:'Real-time sync',fd6:'Every change shows up for everyone instantly, with notifications for what matters. Out of signal? You can still view your data.',
   sh1_eb:'Expenses',sh1_h:'No more "wait, how much do I owe?"',sh1_p:'Every expense is entered once, and each person\'s balance is calculated automatically. At the end you see exactly who pays whom and how much: no calculator, no awkwardness.',
   sh1_l1:'Split equally, between some people or by custom amounts',sh1_l2:'The fewest transfers to settle every debt',sh1_l3:'Settle up in a tap with Bit',
-  mx_total:'Total spent in this event',mx_bal:'Your balance: +₪310',mx_who:'Who owes whom',mx_d1:'Yoav → Noa',mx_d2:'Shira → Noa',mx_pay:'Settle with Bit',mx_list:'Recorded expenses',
-  mx_e1:'Groceries',mx_e1d:'Paid by Noa · everyone',mx_e2:'Fuel',mx_e2d:'Paid by Dan · 3 people',mx_e3:'Campsite',mx_e3d:'Paid by Noa · everyone',
   sh2_eb:'Itinerary',sh2_h:'A schedule everyone actually sees',sh2_p:'Instead of scrolling for the message with the time, the plan lives in one place. Change a time and everyone gets an update.',
   sh2_l1:'Activities by day and time',sh2_l2:'One-tap navigation to every stop',sh2_l3:'Everyone marks if they\'re coming',
-  mi_title:'Route, stops & navigation',mi_day1:'Friday · June 12',mi_day2:'Saturday · June 13',mi_1:'Leaving Tel Aviv',mi_2:'Amud stream hike',mi_3:'Lunch in Rosh Pina',mi_4:'Sunrise on Mt. Arbel',mi_5:'Kayaks on the Jordan',
-  mi_g6:'6 going',mi_g5:'5 going',mi_g3:'3 going',mi_nav:'Navigate',
   sh3_eb:'Gear & shopping',sh3_h:'Nobody forgets the charcoal',sh3_p:'One list for everything to bring and buy. Assign each item to someone, tick it when it\'s ready and see what\'s still missing.',
   sh3_l1:'Gear, tasks and a shared shopping list',sh3_l2:'Assign every item to a person',sh3_l3:'See at a glance what\'s covered',
-  mg_title:'Gear & shopping',mg_gear:'⛺ Gear & tasks (6)',mg_shop:'🛒 Shopping (4)',mg_1:'4-person tent',mg_2:'Grill',mg_3:'Charcoal',mg_4:'Cooler',mg_5:'Water, 3 six-packs',mg_6:'Pita & hummus',mg_7:'Morning coffee ☕',
-  mg_a1:'Dan',mg_a2:'Yoav',mg_a3:'Shira',mg_a4:'Noa',
   p_h:'Your data stays yours',p_p:'We collect only what the app needs to work, and we never sell data to anyone. Full details in the <a href="privacy.html">privacy policy</a>.',
   p_1:'No ads and no ad tracking',p_2:'Encrypted traffic, and each event is visible only to its members',p_3:'Contacts are used only to find friends, and are not stored',p_4:'Delete your account at any time, from inside the app',
   q_eb:'FAQ',q_h:'Questions? Answers.',
@@ -487,12 +483,14 @@ const T = {
   q7:'How do I delete my account?',a7:'In Settings & Account, under Account management. Full details on the <a href="delete-account.html" style="color:var(--bright)">delete account</a> page.',
   d_h:'Ready to go?',d_p:'SyncGo is launching soon. Your first event is a minute away.',soon:'Coming soon to',
   privacy:'Privacy policy',terms:'Terms of use',del:'Delete account',
+  alt_01:'The My events & trips screen in SyncGo, with your balance in each event',alt_04:'Event expenses and who owes whom',alt_06:'The trip itinerary by day and time, with navigation and who is coming',alt_07:'Gear and tasks grouped by who brings what',alt_10:'Currency converter with a current rate',alt_09:'The trip\'s shared photo albums',alt_02:'The event screen: budget & expenses, gear & shopping, itinerary and photos',alt_05:'Adding an expense: who paid and how to split it',alt_03:'Managing the participants of an event',alt_08:'A shared shopping list by category',alt_11:'Sign-in screen: with Google or an email code',sh4_eb:'Currencies',sh4_h:'Abroad? Convert in a tap',sh4_p:'A built-in converter with a current rate that already knows your trip\'s local and settlement currencies. Pay in euros, settle in dollars.',sh4_l1:'29 popular currencies',sh4_l2:'Rates are saved on your phone, so they work without signal too',sh4_l3:'Foreign-currency expenses are converted in the balance automatically',sh5_eb:'Photos',sh5_h:'Every trip photo, in one place',sh5_p:'Add a link to a Google Photos, iCloud or any shared album, and the whole group finds it right inside the event. No more digging through the chat.',sh5_l1:'An album for every day or every moment',sh5_l2:'See who shared each album',sh5_l3:'Opens in a tap on your phone',sc_eb:'A look inside',sc_h:'Here\'s how it looks on your phone',sc_p:'Real screens from the app, with a sample trip.',scf1:'Every tool for the event',scs1:'Budget, gear, itinerary and photos',scf2:'Add an expense',scs2:'Who paid and how to split it',scf3:'Manage participants',scs3:'Invite friends from your contacts',scf4:'Shared shopping list',scs4:'Sorted by category',scf5:'Sign in in seconds',scs5:'With Google or an email code',
   title:'SyncGo · The whole group, on one route'
  }
 };
 const root = document.documentElement;
 const HE = {};
 document.querySelectorAll('[data-t]').forEach(el => { HE[el.dataset.t] = el.hasAttribute('data-html') ? el.innerHTML : el.textContent; });
+document.querySelectorAll('[data-ta]').forEach(el => { HE[el.dataset.ta] = el.alt; });
 HE.title = document.title;
 T.he = HE;
 
@@ -502,6 +500,10 @@ function setLang(l){
   document.querySelectorAll('[data-t]').forEach(el => {
     const v = d[el.dataset.t]; if (v == null) return;
     if (el.hasAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll('img[data-shot]').forEach(img => {
+    img.src = 'assets/img/screens/' + l + '/' + img.dataset.shot + '.webp';
+    const a = d[img.dataset.ta]; if (a) img.alt = a;
   });
   document.title = d.title;
   document.getElementById('lang').textContent = l === 'he' ? 'English' : 'עברית';
