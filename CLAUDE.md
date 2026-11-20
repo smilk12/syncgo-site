@@ -6,3 +6,6 @@ Static HTML on Cloudflare Pages (auto-deploys from GitHub `smilk12/syncgo-site` 
   Each needs he + en versions (or a language switch), and it must match the app's actual data behavior.
 - Contact: support@syncgo.app.
 - Test locally by opening the file, or `python3 -m http.server`. Check mobile widths and RTL/LTR.
+- Images: all site images live in `assets/img/` (served at `https://syncgo.app/assets/img/...`; browse them privately at
+  github.com/smilk12/syncgo-site/tree/main/assets/img). Everything in this repo is **public** once pushed: only images
+  meant for the public site go here. Never real user data, internal dashboards, or unreleased screens with real names/phones.
