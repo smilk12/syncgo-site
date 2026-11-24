@@ -29,7 +29,7 @@ footer .bar{flex-wrap:wrap;gap:14px;justify-content:center}footer a{color:var(--
 <h1>מחיקת חשבון SyncGo</h1><p class="meta">עודכן לאחרונה: 22 בנובמבר 2026</p>
 <h2>מחיקה מתוך האפליקציה (מומלץ)</h2>
 <ol><li>פתחו את SyncGo והתחברו.</li><li>במסך הראשי לחצו על כפתור ההגדרות כדי להגיע ל<b>הגדרות ואזור אישי</b>.</li><li>גללו לאזור <b>ניהול חשבון</b>, החליקו ימינה על כרטיס המחיקה ולחצו <b>מחק חשבון לצמיתות</b>.</li></ol>
-<p>המחיקה מתבצעת מיד, ונשלח אליכם אימייל שמאשר אותה. אם יש לכם יתרה פתוחה באחד האירועים (מישהו חייב לכם או שאתם חייבים), תתבקשו לסגור אותה קודם, כדי שהחשבון של שאר חברי הקבוצה יישאר נכון.</p>
+<p>המחיקה מתבצעת מיד, ונשלח אליכם אימייל שמאשר אותה. אם יש לכם יתרה פתוחה באחד האירועים (מישהו חייב לכם או שאתם חייבים), תוצג לכם אזהרה ותוכלו למחוק בכל זאת: ההוצאות המשותפות יישארו אצל שאר חברי האירוע בלי הפרטים שלכם, והיתרה תופיע אצלם כיתרה של "משתמש שנמחק".</p>
 <h2>אין לכם גישה לאפליקציה?</h2>
 <p>שלחו אימייל אל <a href="mailto:support@syncgo.app?subject=Delete%20my%20SyncGo%20account">support@syncgo.app</a> מהכתובת שרשומה בחשבון, עם הנושא "מחיקת חשבון". נאמת שהבקשה הגיעה מבעל החשבון ונמחק אותו בתוך 30 יום לכל היותר.</p>
 <h2>מחיקת חלק מהנתונים, בלי למחוק את החשבון</h2>
@@ -50,7 +50,7 @@ footer .bar{flex-wrap:wrap;gap:14px;justify-content:center}footer a{color:var(--
 <h1>Delete your SyncGo account</h1><p class="meta">Last updated: 2026-11-22</p>
 <h2>Delete from the app (recommended)</h2>
 <ol><li>Open SyncGo and sign in.</li><li>On the main screen, tap the settings button to open <b>Settings &amp; Account</b>.</li><li>Scroll to <b>Account management</b>, swipe left on the delete card and tap <b>Delete account permanently</b>.</li></ol>
-<p>Deletion is immediate and you will receive a confirmation email. If you have an open balance in any event (someone owes you or you owe someone), you will be asked to settle it first so the other members' balances stay correct.</p>
+<p>Deletion is immediate and you will receive a confirmation email. If you have an open balance in any event (someone owes you or you owe someone), you will see a warning and can still delete: the shared expenses stay with the other members without your details, and the balance shows as belonging to a "Deleted user".</p>
 <h2>Can't access the app?</h2>
 <p>Email <a href="mailto:support@syncgo.app?subject=Delete%20my%20SyncGo%20account">support@syncgo.app</a> from the address registered on your account with the subject “Delete my account”. We will verify the request comes from the account owner and delete it within 30 days at most.</p>
 <h2>Deleting some of your data, without deleting the account</h2>
@@ -70,11 +70,4 @@ footer .bar{flex-wrap:wrap;gap:14px;justify-content:center}footer a{color:var(--
 </main>
 <footer><div class="bar"><a href="privacy.html">Privacy · פרטיות</a><a href="terms.html">Terms · תנאים</a>
 <a href="delete-account.html">Delete account · מחיקת חשבון</a><a href="mailto:support@syncgo.app">support@syncgo.app</a></div></footer>
-<script>
-(function(){var r=document.documentElement,q=new URLSearchParams(location.search).get('lang'),s=null;
-try{s=localStorage.getItem('lang')}catch(e){}
-function set(l){r.lang=l;r.dir=l==='he'?'rtl':'ltr';document.getElementById('lang').textContent=l==='he'?'English':'עברית';
-document.title=document.querySelector('[lang-block='+l+'] h1').textContent+' | SyncGo';try{localStorage.setItem('lang',l)}catch(e){}}
-document.getElementById('lang').onclick=function(){set(r.lang==='he'?'en':'he')};
-set(q==='en'||q==='he'?q:(s||((navigator.language||'').indexOf('he')===0?'he':'en')));})();
-</script></body></html>
+<script src="assets/js/legal.js"></script></body></html>
