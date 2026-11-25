@@ -226,6 +226,8 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
   .nav-cta .btn-primary{display:none}
   .stores .store{flex:1;min-width:0}
 }
+a.store{text-decoration:none;color:inherit;cursor:pointer}
+.tester{margin-top:14px;font-size:.92rem;opacity:.85}.tester a{color:inherit;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -425,15 +427,12 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
         <h2 data-t="d_h">מוכנים לצאת לדרך?</h2>
         <p class="lead" data-t="d_p">SyncGo יוצאת בקרוב. האירוע הראשון שלכם במרחק דקה.</p>
         <div class="stores">
-          <span class="store" aria-label="Google Play">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.8v18.4c0 .5.5.8 1 .6l15.6-8.9c.5-.3.5-1 0-1.3L5 2.2c-.5-.2-1 .1-1 .6z"/></svg>
-            <div><small data-t="soon">בקרוב ב-</small><span>Google Play</span></div>
-          </span>
+          <a class="store" aria-label="Google Play" href="https://play.google.com/store/apps/details?id=app.syncgather.mobile" target="_blank" rel="noopener"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.8v18.4c0 .5.5.8 1 .6l15.6-8.9c.5-.3.5-1 0-1.3L5 2.2c-.5-.2-1 .1-1 .6z"/></svg> <div><small data-t="get">להורדה ב-</small><span>Google Play</span></div> </a>
           <span class="store" aria-label="App Store">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="3.5"/><rect x="10" y="18.3" width="4" height="1.2" rx=".6" fill="#0c1838"/></svg>
             <div><small data-t="soon">בקרוב ב-</small><span>App Store</span></div>
           </span>
-        </div>
+        </div> <p class="tester" data-t="tester" data-html>בתקופת הבדיקה: <a href="https://play.google.com/apps/testing/app.syncgather.mobile" target="_blank" rel="noopener">הצטרפות כבודקים</a> · יש שאלה? <a href="contact.html">צרו קשר</a></p>
       </div>
     </div>
   </section>
@@ -445,7 +444,7 @@ footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem}
     <nav>
       <a href="privacy.html" data-t="privacy">מדיניות פרטיות</a>
       <a href="terms.html" data-t="terms">תנאי שימוש</a>
-      <a href="delete-account.html" data-t="del">מחיקת חשבון</a>
+      <a href="delete-account.html" data-t="del">מחיקת חשבון</a> <a href="contact.html" data-t="contact">צור קשר</a>
       <a href="mailto:support@syncgo.app">support@syncgo.app</a>
     </nav>
     <span>© <span id="yr">2026</span> SyncGo</span>

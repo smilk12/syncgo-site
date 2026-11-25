@@ -1,0 +1,2 @@
+# Invite links: https://syncgo.app/j/{token} shows the join page (the token stays in the address bar)
+/j/*  /join.html  200

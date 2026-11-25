@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0f19"><link rel="icon" href="/assets/img/logo.png">
+<title>SyncGo</title><style>
+:root{--bg:#0b0f19;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.14);--txt:#e2e8f0;--sub:#94a3b8;--acc:#0088ff}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -200px,rgba(0,118,255,.18),transparent),var(--bg);color:var(--txt);
+font:16px/1.7 Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{position:sticky;top:0;backdrop-filter:blur(12px);background:rgba(11,15,25,.75);border-bottom:1px solid var(--line);z-index:2}
+.bar{max-width:640px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+.brand{display:flex;gap:10px;align-items:center;color:var(--txt);text-decoration:none;font-weight:800}
+.brand img{width:32px;height:32px;border-radius:8px}
+button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer}
+main{max-width:640px;margin:auto;padding:32px 20px 64px}
+h1{font-size:2rem;line-height:1.25;margin:.2em 0}p{color:var(--sub)}a{color:var(--acc)}
+label{display:block;font-size:.9rem;color:var(--sub);margin:16px 0 6px}
+input,select,textarea{width:100%;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit}
+select option{color:#0b0f19}
+textarea{min-height:150px;resize:vertical}
+.send{margin-top:20px;width:100%;padding:14px;border-radius:999px;background:#f2f4f7;color:#0e1015;font-weight:700;border:0}
+.send:disabled{opacity:.6}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{margin-top:14px;font-weight:600}.msg.ok{color:#4ade80}.msg.err{color:#f87171}
+.note{font-size:.85rem;color:var(--sub);margin-top:16px}
+footer{border-top:1px solid var(--line);color:var(--sub);font-size:.9rem}
+footer .bar{flex-wrap:wrap;gap:14px;justify-content:center}footer a{color:var(--sub)}
+[lang-block]{display:none}html[lang=he] [lang-block=he],html[lang=en] [lang-block=en]{display:block}
+</style></head><body>
+<header><div class="bar"><a class="brand" href="/"><img src="/assets/img/logo.png" alt="">SyncGo</a><button id="lang" type="button">English</button></div></header>
+<main>
+<section lang-block="he" dir="rtl">
+<h1>צרו קשר</h1>
+<p>תקלה, רעיון לשיפור, שאלה או הצעה לשיתוף פעולה? כתבו לנו ונחזור אליכם במייל.</p>
+<form data-contact data-lang="he" novalidate>
+  <label for="t-he">נושא</label>
+  <select id="t-he" name="topic"><option value="bug">תקלה או בעיה</option><option value="idea">הצעת ייעול</option>
+    <option value="partnership">שיתוף פעולה</option><option value="privacy">פרטיות ומחיקת מידע</option><option value="other">אחר</option></select>
+  <label for="n-he">שם</label><input id="n-he" name="name" maxlength="80" autocomplete="name" required>
+  <label for="e-he">אימייל לתשובה</label><input id="e-he" name="email" type="email" maxlength="200" autocomplete="email" dir="ltr" required>
+  <label for="m-he">ההודעה</label><textarea id="m-he" name="message" maxlength="3000" required></textarea>
+  <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <button class="send" type="submit">שליחה</button>
+  <p class="msg" role="status" aria-live="polite"></p>
+</form>
+<p class="note">את הפרטים שתשלחו אנחנו משתמשים רק כדי לענות לפנייה, והם לא נשמרים באתר. פרטים ב<a href="/privacy.html">מדיניות הפרטיות</a>. אפשר גם לכתוב ישירות ל-<a href="mailto:support@syncgo.app">support@syncgo.app</a>.</p>
+</section>
+<section lang-block="en" dir="ltr">
+<h1>Contact us</h1>
+<p>A bug, an idea, a question or a partnership proposal? Write to us and we'll get back to you by email.</p>
+<form data-contact data-lang="en" novalidate>
+  <label for="t-en">Topic</label>
+  <select id="t-en" name="topic"><option value="bug">Bug or problem</option><option value="idea">Improvement idea</option>
+    <option value="partnership">Partnership</option><option value="privacy">Privacy &amp; data deletion</option><option value="other">Other</option></select>
+  <label for="n-en">Name</label><input id="n-en" name="name" maxlength="80" autocomplete="name" required>
+  <label for="e-en">Email for our reply</label><input id="e-en" name="email" type="email" maxlength="200" autocomplete="email" required>
+  <label for="m-en">Message</label><textarea id="m-en" name="message" maxlength="3000" required></textarea>
+  <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <button class="send" type="submit">Send</button>
+  <p class="msg" role="status" aria-live="polite"></p>
+</form>
+<p class="note">We use what you send only to answer you; the site doesn't store it. See the <a href="/privacy.html">privacy policy</a>. You can also write to <a href="mailto:support@syncgo.app">support@syncgo.app</a>.</p>
+</section>
+</main>
+<footer><div class="bar"><a href="/privacy.html">Privacy · פרטיות</a><a href="/terms.html">Terms · תנאים</a>
+<a href="/delete-account.html">Delete account · מחיקת חשבון</a><a href="/contact.html">Contact · צור קשר</a></div></footer>
+<script src="/assets/js/contact.js"></script>
+<script src="/assets/js/legal.js"></script></body></html>
