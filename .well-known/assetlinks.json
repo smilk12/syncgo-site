@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.syncgather.mobile",
+      "sha256_cert_fingerprints": [
+        "EA:F8:B7:D4:EE:E5:05:13:D8:A8:38:44:88:4A:70:BD:31:AB:89:6F:19:C1:4A:77:0A:54:C2:08:31:11:CF:06",
+        "9E:82:95:06:60:5F:21:2B:82:72:5A:B5:97:8D:54:2E:D3:98:CF:AA:17:4A:DC:FD:5B:F0:8A:62:F4:E3:79:B9"
+      ]
+    }
+  }
+]
