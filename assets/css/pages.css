@@ -1,0 +1,70 @@
+/* Shared style for the inner pages (privacy, terms, delete-account, contact, join), Redesign C (2026-11-26).
+   Tokens = sync-gather/src/styles/_tokens.scss; keep in step with the <style> in index.html. */
+@font-face{font-family:'Rubik';src:url(/assets/fonts/Rubik-VariableFont_wght.ttf) format('truetype');font-weight:300 900;font-display:swap}
+:root{
+  --bg:#F5F3EF;--sheet:#FFFFFF;--ink:#121620;--muted:#7B8190;--line:#E8E4DC;--soft:#F5F3EF;--shadow:rgba(40,30,20,.16);
+  --btn:#121620;--btn-ink:#FFFFFF;--brand:#0A64FF;--ok:#15803D;--err:#DC2626;--hue:#DCE9FF;
+  --logo-start:#0C1838;--logo-mid:#0066FE;--logo-end:#0088FF;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1015;--sheet:#171A21;--ink:#F2F4F7;--muted:#8C93A3;--line:#262A33;--soft:#1F232C;--shadow:rgba(0,0,0,.5);
+  --btn:#F2F4F7;--btn-ink:#0E1015;--brand:#4D9BFF;--ok:#4ADE80;--err:#F87171;--hue:#172741;
+  --logo-start:#7FB2FF;--logo-mid:#4D9BFF;--logo-end:#3FA2FF;color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1015;--sheet:#171A21;--ink:#F2F4F7;--muted:#8C93A3;--line:#262A33;--soft:#1F232C;--shadow:rgba(0,0,0,.5);
+  --btn:#F2F4F7;--btn-ink:#0E1015;--brand:#4D9BFF;--ok:#4ADE80;--err:#F87171;--hue:#172741;
+  --logo-start:#7FB2FF;--logo-mid:#4D9BFF;--logo-end:#3FA2FF;color-scheme:dark;
+}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+a{color:var(--brand)}
+
+header{position:sticky;top:0;z-index:2;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.bar{max-width:var(--w,820px);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.brand{display:flex;gap:10px;align-items:center;color:var(--ink);text-decoration:none;font-weight:800;font-size:1.3rem;letter-spacing:-.02em}
+.brand b{color:var(--brand)}
+.brand svg{width:36px;height:32px;overflow:visible}
+.brand .r{fill:none;stroke-width:13;stroke-linecap:round}.brand .d{fill:var(--logo-start)}.brand .a{fill:var(--logo-end)}
+#lang{background:var(--sheet);color:var(--ink);border:0;border-radius:999px;height:44px;padding:0 18px;font:700 .9rem Rubik,sans-serif;cursor:pointer;box-shadow:0 6px 18px -8px var(--shadow)}
+
+main{max-width:var(--w,820px);margin:auto;padding:24px 16px 64px}
+h1{font-size:clamp(2rem,5vw,2.8rem);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin:.3em 0 .3em}
+h2{font-size:1.25rem;line-height:1.3;font-weight:800;margin:2em 0 .5em}
+.meta{color:var(--muted);font-size:.92rem}
+p{margin:.7em 0}
+.card{background:var(--sheet);border:0;border-radius:24px;padding:18px 22px;margin:18px 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem;background:var(--sheet);border-radius:20px;overflow:hidden}
+td,th{border-bottom:1px solid var(--line);padding:10px 12px;text-align:start;vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{color:var(--muted);font-weight:600}
+ol li,ul li{margin:.3em 0}
+
+/* forms (contact) */
+label{display:block;font-size:.9rem;color:var(--muted);margin:16px 0 6px;font-weight:500}
+input,select,textarea{width:100%;background:var(--sheet);color:var(--ink);border:1.5px solid transparent;border-radius:18px;padding:14px 16px;font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--ink)}
+textarea{min-height:150px;resize:vertical}
+.send{margin-top:22px;width:100%;height:56px;border-radius:999px;background:var(--btn);color:var(--btn-ink);font:700 1.02rem Rubik,sans-serif;border:0;cursor:pointer}
+.send:disabled{opacity:.6}
+/* honeypot: out of sight without a far-off position (left:-9999px made RTL pages scroll sideways) */
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;opacity:0}
+.msg{margin-top:14px;font-weight:600}.msg.ok{color:var(--ok)}.msg.err{color:var(--err)}
+.note{font-size:.88rem;color:var(--muted);margin-top:16px}
+
+/* join */
+.join{text-align:center}
+.join .obj{width:150px;height:auto;margin:8px auto 0;display:block;filter:drop-shadow(0 18px 18px rgba(0,0,0,.12))}
+.cta{display:flex;align-items:center;justify-content:center;margin:24px auto 10px;max-width:360px;height:58px;border-radius:999px;background:var(--btn);color:var(--btn-ink);font-weight:700;text-decoration:none;font-size:1.05rem}
+.ghost{display:flex;align-items:center;justify-content:center;margin:0 auto;max-width:360px;height:52px;border-radius:999px;background:var(--sheet);color:var(--ink);text-decoration:none;font-weight:600}
+.join .card{text-align:start;font-size:.95rem}
+.join .card ol{margin:.4em 0;padding-inline-start:1.2em}
+.join p{color:var(--muted)}
+.bad{display:none}body.invalid .ok{display:none}body.invalid .bad{display:block}
+
+footer{color:var(--muted);font-size:.9rem}
+footer .bar{flex-wrap:wrap;gap:6px;justify-content:center;padding-bottom:40px}
+footer a{color:var(--ink);text-decoration:none;background:var(--sheet);padding:8px 14px;border-radius:999px}
+footer a:hover{background:var(--btn);color:var(--btn-ink)}
+[lang-block]{display:none}html[lang=he] [lang-block=he],html[lang=en] [lang-block=en]{display:block}

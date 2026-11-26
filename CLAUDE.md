@@ -1,7 +1,10 @@
 # syncgo-site: syncgo.app marketing and legal site
 Static HTML on Cloudflare Pages (auto-deploys from GitHub `smilk12/syncgo-site` when pushed, so **pushing = publishing**).
-- `index.html`: a single page, Hebrew RTL, Rubik font (self-hosted in `assets/fonts`), script in `assets/js/site.js`. A premium visual
-  (deep blue + turquoise glow, cinematic/3D). **Don't change the visual identity unless asked.**
+- `index.html`: a single page, Hebrew RTL + English (switch in `assets/js/site.js`), Rubik variable font (self-hosted in `assets/fonts`).
+  Visual identity = the app's **Redesign C** (approved by Shmuel 2026-11-26): cream background, black pill buttons, pastel cards,
+  3D objects (`assets/img/objects/`), the logo as a route, light + dark (screenshots follow the theme: `screens/{he,en}[-dark]/`).
+  Tokens mirror `sync-gather/src/styles/_tokens.scss`. Inner pages share `assets/css/pages.css`. Prototype: `docs/design/site-2026-11/`.
+  **Don't change the visual identity unless asked.** CSP allows no inline scripts: put JS in `assets/js/`.
 - Needed for the stores: `privacy.html`, `terms.html`, `delete-account.html` (linked from index but missing).
   Each needs he + en versions (or a language switch), and it must match the app's actual data behavior.
 - Contact: support@syncgo.app.

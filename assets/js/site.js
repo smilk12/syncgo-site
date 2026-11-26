@@ -9,7 +9,7 @@ const T = {
   fl1b:'Ben paid Emma $40',fl1s:'Debt settled ✓',fl2b:'Updated: leaving at 07:30',fl2s:'The whole group sees it instantly',
   how_eb:'How it works',how_h:'Three steps, and everyone is on the same page',how_p:'Nobody needs a tutorial. Open it, invite, and go.',
   s1t:'Create an event',s1d:'A trip, a vacation, a party or a shared flat. Give it a name, dates and a currency. That\'s it.',
-  s2t:'Invite your friends',s2d:'Pick friends from your contacts. Anyone already on SyncGo joins instantly, and everyone sees the same up-to-date picture.',
+  s2t:'Invite your friends',s2d:'Pick friends from your contacts or send an invite link. Whoever joins sees the same up-to-date picture as everyone else.',
   s3t:'Add things and enjoy',s3d:'Everyone adds expenses, plans and gear. The app works out who owes whom, and at the end you settle up in a tap.',
   f_eb:'Features',f_h:'Everything a group needs, in one place',f_p:'Instead of five WhatsApp groups, a spreadsheet and notes: one app that works for everyone.',
   ft1:'Split expenses',fd1:'Equally, between some of the group or by custom amounts. Balances update on their own.',
@@ -33,15 +33,26 @@ const T = {
   q4:'Can I add expenses in a foreign currency?',a4:'Yes. Pick a local currency for the destination and a settlement currency, and conversion uses a current rate.',
   q5:'Does the app move money?',a5:'No. SyncGo calculates and shows who should pay whom. The transfer itself happens in a payments app such as Bit, and you mark the debt as settled in SyncGo.',
   q6:'Which devices does it work on?',a6:'SyncGo launches first on Android in Google Play, followed shortly by iPhone in the App Store.',
-  q7:'How do I delete my account?',a7:'In Settings & Account, under Account management. Full details on the <a href="delete-account.html" style="color:var(--bright)">delete account</a> page.',q8:'Does it work without signal?',a8:'You can view everything already opened on your phone: itinerary, expenses, gear and shopping. Adding or changing things needs a connection, and the app shows when the data was last updated.',q9:'Can I get a summary of the whole event?',a9:'Yes. On the event screen tap "Event summary (PDF)" to get a designed document with the itinerary, expenses, who pays whom, gear and shopping, ready to send on WhatsApp or by email.',
+  q7:'How do I delete my account?',a7:'In Settings & Account, under Account management. Full details on the <a href="delete-account.html">delete account</a> page.',q8:'Does it work without signal?',a8:'You can view everything already opened on your phone: itinerary, expenses, gear and shopping. Adding or changing things needs a connection, and the app shows when the data was last updated.',q9:'Can I get a summary of the whole event?',a9:'Yes. On the event screen tap "Event summary (PDF)" to get a designed document with the itinerary, expenses, who pays whom, gear and shopping, ready to send on WhatsApp or by email.',
   get:'Get it on',tester:'During testing: <a href="https://play.google.com/apps/testing/app.syncgather.mobile" target="_blank" rel="noopener">join as a tester</a> · Questions? <a href="contact.html">Contact us</a>',contact:'Contact',
   d_h:'Ready to go?',d_p:'SyncGo is launching soon. Your first event is a minute away.',soon:'Coming soon to',
   privacy:'Privacy policy',terms:'Terms of use',del:'Delete account',
   alt_01:'The My events & trips screen in SyncGo, with your balance in each event',alt_04:'Event expenses and who owes whom',alt_06:'The trip itinerary by day and time, with navigation and who is coming',alt_07:'Gear and tasks by who brings what, with a color for each participant',alt_10:'Currency converter with a current rate',alt_09:'The trip\'s shared photo albums',alt_02:'The event screen: budget & expenses, gear & shopping, itinerary, photos and the PDF summary',alt_05:'Adding an expense: who paid and how to split it',alt_03:'Managing the participants of an event',alt_08:'A shared shopping list by category',alt_12:'Shopping list by who buys it, with a color for each participant',alt_13:'Settings: language, currency and picking your color',alt_11:'Sign-in screen: with Google or an email code',sh4_eb:'Currencies',sh4_h:'Abroad? Convert in a tap',sh4_p:'A built-in converter with a current rate that already knows your trip\'s local and settlement currencies. Pay in euros, settle in dollars.',sh4_l1:'29 popular currencies',sh4_l2:'Rates are saved on your phone, so they work without signal too',sh4_l3:'Foreign-currency expenses are converted in the balance automatically',sh5_eb:'Photos',sh5_h:'Every trip photo, in one place',sh5_p:'Add a link to a Google Photos, iCloud or any shared album, and the whole group finds it right inside the event. No more digging through the chat.',sh5_l1:'An album for every day or every moment',sh5_l2:'See who shared each album',sh5_l3:'Opens in a tap on your phone',sc_eb:'A look inside',sc_h:'Here\'s how it looks on your phone',sc_p:'Real screens from the app, with a sample trip.',scf1:'Every tool for the event',scs1:'Budget, gear, itinerary, photos and a PDF summary',scf2:'Add an expense',scs2:'Who paid and how to split it',scf3:'Gear & tasks',scs3:'Who brings what, in their color',scf4:'Your color',scs4:'Pick the color everyone sees for you',scf5:'Sign in in seconds',scs5:'With Google or an email code',
+  scf6:'Invite with a link',scs6:'Send a link, and anyone who taps it joins',scf7:'Never miss a thing',scs7:'Everything that happened in your events, in one place',
+  alt_14:'The notifications screen: what happened in my events',
   title:'SyncGo · The whole group, on one route'
  }
 };
 const root = document.documentElement;
+root.classList.add('js-on');   // sections fade in on scroll only when this script runs; without it everything stays visible
+
+// Dark mode: follows the system until the visitor picks one (the moon/sun button); the screenshots follow it too
+function isDark(){ const t = root.dataset.theme; return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+function shots(){
+  const s = isDark() ? '-dark' : '';
+  document.querySelectorAll('img[data-shot]').forEach(img => { img.src = 'assets/img/screens/' + root.lang + s + '/' + img.dataset.shot + '.webp'; });
+}
+try { const t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') root.dataset.theme = t; } catch(e){}
 const HE = {};
 document.querySelectorAll('[data-t]').forEach(el => { HE[el.dataset.t] = el.hasAttribute('data-html') ? el.innerHTML : el.textContent; });
 document.querySelectorAll('[data-ta]').forEach(el => { HE[el.dataset.ta] = el.alt; });
@@ -55,20 +66,23 @@ function setLang(l){
     const v = d[el.dataset.t]; if (v == null) return;
     if (el.hasAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
   });
-  document.querySelectorAll('img[data-shot]').forEach(img => {
-    img.src = 'assets/img/screens/' + l + '/' + img.dataset.shot + '.webp';
-    const a = d[img.dataset.ta]; if (a) img.alt = a;
-  });
+  document.querySelectorAll('img[data-shot]').forEach(img => { const a = d[img.dataset.ta]; if (a) img.alt = a; });
+  shots();
   document.title = d.title;
   document.getElementById('lang').textContent = l === 'he' ? 'English' : 'עברית';
-  document.querySelectorAll('.back').forEach(b => b.textContent = l === 'he' ? '›' : '‹');
   try { localStorage.setItem('lang', l); } catch(e){}
 }
 document.getElementById('lang').onclick = () => setLang(root.lang === 'he' ? 'en' : 'he');
 let start = null;
 try { start = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang'); } catch(e){}
 if (start !== 'he' && start !== 'en') start = (navigator.language || '').startsWith('he') ? 'he' : 'en';
-if (start !== 'he') setLang(start);
+if (start !== 'he') setLang(start); else shots();
+document.getElementById('theme').onclick = () => {
+  root.dataset.theme = isDark() ? 'light' : 'dark';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch(e){}
+  shots();
+};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', shots);
 
 document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -82,3 +96,9 @@ document.querySelectorAll('.rv').forEach((el, i) => {
   el.style.transitionDelay = (i % 3) * 80 + 'ms';
   io ? io.observe(el) : el.classList.add('in');
 });
+
+// The logo draws itself when the download card comes into view (as in the app's splash)
+const fl = document.getElementById('finalLogo');
+if (fl && io) new IntersectionObserver((es, o) => es.forEach(e => {
+  if (e.isIntersecting) { fl.classList.add('draw'); o.disconnect(); }
+}), { threshold: .5 }).observe(fl);
