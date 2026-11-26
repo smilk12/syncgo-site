@@ -1,2 +1,3 @@
-# Invite links: https://syncgo.app/j/{token} shows the join page (the token stays in the address bar)
-/j/*  /join.html  200
+# Invite links: https://syncgo.app/j/{token} shows the join page (the token stays in the address bar).
+# Target without ".html": Cloudflare Pages redirects *.html to the extensionless path, which would drop the token.
+/j/*  /join  200
