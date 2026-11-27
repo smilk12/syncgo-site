@@ -6,6 +6,8 @@ Static HTML on Cloudflare Pages (auto-deploys from GitHub `smilk12/syncgo-site` 
   Tokens mirror `sync-gather/src/styles/_tokens.scss`. Inner pages share `assets/css/pages.css`. Prototype: `docs/design/site-2026-11/`.
   **Don't change the visual identity unless asked.** CSP allows no inline scripts: put JS in `assets/js/`.
   `assets/*` is cached for a day: when a JS/CSS file changes, bump its `?v=YYYYMMDD` in every page that loads it.
+  Launch video: `assets/video/syncgo-{he,en}.mp4` (+ `-poster.webp`), 1920×1080, 35 s, from `docs/design/video-2026-11/`;
+  `site.js` swaps it with the language. When a video is re-rendered, bump its `?v=` in `index.html` and `site.js`.
 - Needed for the stores: `privacy.html`, `terms.html`, `delete-account.html` (linked from index but missing).
   Each needs he + en versions (or a language switch), and it must match the app's actual data behavior.
 - Contact: support@syncgo.app.

@@ -133,6 +133,8 @@ header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 8
 
 /* sections */
 section{padding:88px 0}
+.video{max-width:1040px;margin-inline:auto;border-radius:var(--r-big);overflow:hidden;background:var(--sheet);box-shadow:0 50px 90px -50px var(--shadow)}
+.video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#F5F3EF}
 .sec-head{margin-bottom:48px}
 .sec-head h2{margin:16px 0 14px}
 
@@ -333,6 +335,19 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:.93rem}
     </div>
   </section>
 
+  <!-- VIDEO: the launch video (35 s, no sound). Loads only when played (preload="none"); site.js swaps he/en. -->
+  <section id="video" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head center rv">
+        <span class="eyebrow"><i></i><span data-t="vid_eb">35 שניות</span></span>
+        <h2 data-t="vid_h">ככה זה עובד</h2>
+      </div>
+      <div class="video rv"><video id="promo" data-l="he" controls muted playsinline preload="none" width="1920" height="1080"
+        poster="assets/video/syncgo-he-poster.webp?v=20261127" aria-label="סרטון קצר על SyncGo: הוצאות, קישור הזמנה, ציוד, מסלול, אלבומים וסיכום PDF">
+        <source src="assets/video/syncgo-he.mp4?v=20261127" type="video/mp4"></video></div>
+    </div>
+  </section>
+
   <!-- HOW IT WORKS -->
   <section id="how">
     <div class="wrap">
@@ -516,6 +531,6 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:.93rem}
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=20261126"></script>
+<script src="assets/js/site.js?v=20261127"></script>
 </body>
 </html>
